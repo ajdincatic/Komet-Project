@@ -1,0 +1,65 @@
+.mainDiv {
+  background-image: url("../assets/back.jpg");
+  background-size: cover;
+  background-position: top;
+  padding: 50px 0;
+}
+
+.form {
+  width: 30%;
+  margin: 0 auto;
+  padding: 3% 0 5% 0;
+  background-color: white;
+  border: 3px solid #f1f1f1;
+  padding: 50px;
+}
+
+.button {
+  background-color: #4caf50 !important;
+  border-radius: 0 !important;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  width: 100%;
+  outline: none !important;
+}
+
+.form .p {
+  text-align: center;
+  font-size: 14px;
+}
+
+.h3 {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.link {
+  color: green;
+}
+
+@media screen and (max-width: 1300px) {
+  .form {
+    width: 40%;
+    margin-top: 0;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .mainDiv {
+    font-size: 14px;
+  }
+  .form {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .mainDiv {
+    font-size: 12px;
+  }
+  .form {
+    width: 90%;
+  }
+}

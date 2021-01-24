@@ -1,0 +1,31 @@
+.header {
+  background-color: #ffffff;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: 1px solid lightgray;
+}
+
+.header:hover {
+  background-color: #eeeeee;
+}
+
+.body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+
+.body.active {
+  max-height: 400px;
+  margin-top: 10px;
+}
+
+.img {
+  margin-top: 10px;
+  max-width: 250px;
+  max-height: 250px;
+  border-radius: 20px;
+  padding: 3px;
+  background-color: grey;
+}

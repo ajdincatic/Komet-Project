@@ -1,0 +1,51 @@
+.mainDiv {
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border: 1px solid lightgrey;
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  display: flex;
+  margin-bottom: 40px;
+}
+
+.button {
+  padding: 10px;
+  border: none;
+  background-color: rgb(81, 115, 228);
+  border-radius: 3%;
+  width: 13%;
+  font-size: 14px;
+  color: #ffffff;
+  outline: none !important;
+}
+
+.headerLinks {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.link {
+  margin-right: 15px;
+}
+
+@media (max-width: 1000px) {
+  .sidebarCollapse {
+    width: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebarCollapse {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .button {
+    width: auto;
+  }
+}

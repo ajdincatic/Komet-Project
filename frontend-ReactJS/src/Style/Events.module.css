@@ -1,0 +1,21 @@
+.header {
+  background-color: #ffffff;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  border: 1px solid lightgray;
+}
+
+.header:hover {
+  background-color: #eeeeee;
+}
+
+.body {
+  max-height: 0;
+  overflow: hidden;
+}
+
+.active {
+  max-height: 100%;
+}

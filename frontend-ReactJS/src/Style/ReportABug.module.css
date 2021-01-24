@@ -1,0 +1,11 @@
+.item {
+  display: block;
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid lightgray;
+  padding: 18px;
+}
+
+.item .contentRight {
+  float: right;
+}
