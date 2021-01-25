@@ -1,0 +1,13 @@
+.footer {
+  position: fixed;
+  right: 30px;
+  bottom: 20px;
+  color: grey;
+}
+
+.charts {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+}

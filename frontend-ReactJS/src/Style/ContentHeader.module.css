@@ -1,0 +1,27 @@
+.mainDiv {
+  padding: 0 1%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.h2 {
+  width: 100%;
+  font-weight: 500;
+  font-size: 30px;
+}
+
+.link {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button {
+  border: none;
+  padding: 10px;
+  background-color: rgb(81, 115, 228);
+  color: white;
+  border-radius: 5%;
+  margin-top: 5px;
+}

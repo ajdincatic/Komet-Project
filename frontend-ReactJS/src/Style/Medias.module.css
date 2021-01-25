@@ -1,0 +1,30 @@
+.mainDiv {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+}
+
+.mediaDiv {
+  background-color: #e5ecec;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.image {
+  width: 400px;
+  height: 300px;
+  cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .mediaDiv {
+    width: 100%;
+  }
+  .image {
+    width: 100%;
+  }
+  .video {
+    width: 100%;
+  }
+}
