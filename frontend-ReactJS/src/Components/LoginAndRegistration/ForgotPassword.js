@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { ErrorModal } from "../ErrorModal";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { endpoints } from "../../constants";
-import styles from "../../Style/ForgotPassword.module.css";
+import { endpoints, reactRoutes } from "../../constants";
+import styles from "../../Style/Auth.module.css";
 
 export const ForgotPassword = ({ history }) => {
   const [Emailform, EmailsetForm] = useState("");
@@ -27,7 +27,7 @@ export const ForgotPassword = ({ history }) => {
     axios
       .post(endpoints.resetPasswordEmail, formData)
       .then((r) => {
-        history.replace("/forgotPassword/code");
+        history.replace(reactRoutes.forgotPasswordCode);
       })
       .catch((error) => {
         setError(true);
@@ -76,7 +76,7 @@ export const ForgotPassword = ({ history }) => {
               )}
 
               <p className={styles.p}>
-                <Link to="/login" className={styles.link}>
+                <Link to={reactRoutes.login} className={styles.link}>
                   Go back to login.
                 </Link>
               </p>

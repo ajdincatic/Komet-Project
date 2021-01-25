@@ -41,6 +41,6 @@ const store = createStore(
   composeEnhancers(applyMiddleware(logger, thunk))
 );
 
-let persistor = persistStore(store);
+const persistor = persistStore(store);
 
 export { store, persistor };

@@ -26,8 +26,7 @@ export const Medias = ({ type, data }) => {
 
   return (
     <>
-      {show && <PreviewImage handleClose={handleClose} path={path} />}
-
+      {show && <PreviewImage handleClose={handleClose} imgPath={path} />}
       <ContentHeader title={type === "photo" ? "Photos" : "Videos"} />
       <div className={styles.mainDiv}>
         {data.map((x) => (
@@ -43,19 +42,17 @@ export const Medias = ({ type, data }) => {
                 alt="alt"
               />
             ) : (
-              <div>
-                <Youtube
-                  className={styles.video}
-                  id={getYoutubeId(x.link)}
-                  ref={(el) => videos.current.push(el)}
-                  videoId={getYoutubeId(x.link)}
-                  opts={{
-                    height: "250",
-                    width: "400",
-                  }}
-                  onPlay={(e) => handleOnVideoPlay(e)}
-                />
-              </div>
+              <Youtube
+                className={styles.video}
+                id={getYoutubeId(x.link)}
+                ref={(el) => videos.current.push(el)}
+                videoId={getYoutubeId(x.link)}
+                opts={{
+                  height: "250",
+                  width: "400",
+                }}
+                onPlay={(e) => handleOnVideoPlay(e)}
+              />
             )}
             <p>
               Title: {x.title}({x.media_category_name})

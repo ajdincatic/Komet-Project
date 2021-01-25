@@ -10,16 +10,21 @@ import { Registration } from "../Components/LoginAndRegistration/Registration";
 import { ForgotPassword } from "../Components/LoginAndRegistration/ForgotPassword";
 import { ForgotPasswordCode } from "../Components/LoginAndRegistration/ForgotPasswordCode";
 import { SetNewPassword } from "../Components/LoginAndRegistration/SetNewPassword";
+import { reactRoutes } from "../constants";
 
 export const LoginRoutes = () => (
   <Router>
     <Switch>
-      <Route exact path="/register" component={Registration}></Route>
-      <Route exact path="/login" component={Login}></Route>
-      <Route exact path="/forgotPassword" component={ForgotPassword}></Route>
+      <Route exact path={reactRoutes.register} component={Registration}></Route>
+      <Route exact path={reactRoutes.login} component={Login}></Route>
       <Route
         exact
-        path="/forgotPassword/code"
+        path={reactRoutes.forgotPassword}
+        component={ForgotPassword}
+      ></Route>
+      <Route
+        exact
+        path={reactRoutes.forgotPasswordCode}
         component={ForgotPasswordCode}
       ></Route>
       <Route
@@ -28,6 +33,6 @@ export const LoginRoutes = () => (
         component={SetNewPassword}
       ></Route>
     </Switch>
-    <Redirect to="/login" />
+    <Redirect to={reactRoutes.login} />
   </Router>
 );

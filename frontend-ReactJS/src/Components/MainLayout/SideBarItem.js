@@ -30,7 +30,7 @@ export const SideBarItem = ({ subelements, route, title }) => {
                 <NavLink
                   className={styles.a}
                   activeStyle={activeStyle}
-                  to={"/" + element.route}
+                  to={element.route}
                 >
                   {element.title}
                 </NavLink>
@@ -43,11 +43,7 @@ export const SideBarItem = ({ subelements, route, title }) => {
   } else {
     return (
       <div>
-        <NavLink
-          className={styles.a}
-          activeStyle={activeStyle}
-          to={"/" + route}
-        >
+        <NavLink className={styles.a} activeStyle={activeStyle} to={route}>
           {title}
         </NavLink>
       </div>

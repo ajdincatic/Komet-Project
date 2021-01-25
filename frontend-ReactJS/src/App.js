@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./App.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Wrapper } from "./Components/MainLayout/Wrapper";
 import { Routes } from "./Components/Routes";
@@ -7,9 +6,10 @@ import { LoginRoutes } from "./Components/LoginRoutes";
 import { useSelector } from "react-redux";
 import { SideBar } from "./Components/MainLayout/SideBar";
 import { Content } from "./Components/MainLayout/Content";
+import "./App.css";
 import axios from "axios";
 
-function App() {
+export const App = () => {
   const data = useSelector((state) => state.auth);
 
   const [sidebarActive, setsidebarActive] = useState(true);
@@ -33,9 +33,7 @@ function App() {
       <Router>
         <SideBar
           isActive={sidebarActive}
-          user={
-            data.authUser.user.first_name + " " + data.authUser.user.last_name
-          }
+          user={`${data.authUser.user.first_name} ${data.authUser.user.last_name}`}
         />
         <Content isActive={contentActive} handler={toogleMenu}>
           <Routes />
@@ -43,6 +41,4 @@ function App() {
       </Router>
     </Wrapper>
   );
-}
-
-export default App;
+};

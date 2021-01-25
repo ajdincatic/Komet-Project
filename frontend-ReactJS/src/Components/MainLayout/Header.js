@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AlertModal } from "../AlertModal";
 import styles from "../../Style/Header.module.css";
+import { reactRoutes } from "../../constants";
 
 export const Header = ({ handler }) => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ export const Header = ({ handler }) => {
 
         <div className={styles.headerLinks}>
           <div className={styles.link}>
-            <Link to="/profile">Profile</Link>
+            <Link to={reactRoutes.profile}>Profile</Link>
           </div>
           <div className={styles.link}>
             <Link onClick={handleShow}>Logout</Link>

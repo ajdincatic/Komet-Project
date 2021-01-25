@@ -2,10 +2,9 @@ import React, { useEffect } from "react";
 import { ContentHeader } from "../ContentHeader";
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../../store/actions/index";
-import { Link } from "react-router-dom";
 import { AddNewsType } from "../News/AddNewsType";
 import { userTypes } from "../../constants";
-import styles from "../../Style/News.module.css";
+import { ItemsList } from "../ItemsList";
 
 export const NewsTypes = () => {
   const authData = useSelector(
@@ -22,22 +21,17 @@ export const NewsTypes = () => {
   return (
     <>
       <ContentHeader title="News types" />
-      {data.map((x) => {
-        return (
-          <Link
-            className={styles.link}
-            to={"/news/subfolders/" + x.id + "/news"}
-            key={x.id}
-            onClick={() => {
-              dispatch(actions.clearSubfolders());
-            }}
-          >
-            <div>{x.type_name}</div>
-          </Link>
-        );
-      })}
+      <ItemsList
+        data={data}
+        dispatch={dispatch}
+        action1={actions.clearSubfolders}
+        linkPart1="/news/subfolders/"
+        linkPart2="/news"
+        content="type_name"
+      />
+      <br />
       {authData === userTypes.administrator && (
-        <AddNewsType data={data} dispatch={dispatch} />
+        <AddNewsType dispatch={dispatch} />
       )}
     </>
   );

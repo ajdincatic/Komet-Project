@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ContentHeader } from "../ContentHeader";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { endpoints } from "../../constants";
+import { endpoints, reactRoutes } from "../../constants";
 import { Input } from "../Input";
 import styles from "../../Style/Profile.module.css";
 import * as actions from "../../store/actions/index";
@@ -205,7 +205,7 @@ export const EditProfile = ({ history }) => {
       .post("/profile/" + data.id + "/updateProfile", formData)
       .then(() => {
         dispatch(actions.getProfileData());
-        history.replace("/profile");
+        history.replace(reactRoutes.profile);
       })
       .catch((error) => {
         alert("Something went wrong");
@@ -224,7 +224,7 @@ export const EditProfile = ({ history }) => {
     <>
       <ContentHeader
         title="Edit profile"
-        actionRoute="profile/updatePassword"
+        actionRoute={reactRoutes.updatePassword}
         buttonText="Update password"
       />
       <form onSubmit={postDataHandler}>

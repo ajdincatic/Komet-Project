@@ -6,7 +6,7 @@ import { Reply } from "./Reply";
 import { AddReply } from "./AddReply";
 import { userTypes } from "../../constants";
 
-export const TopicReplies = (params) => {
+export const TopicReplies = ({ match }) => {
   const authData = useSelector(
     (state) => state.auth.authUser.user.user_type_name
   );
@@ -15,54 +15,49 @@ export const TopicReplies = (params) => {
 
   useEffect(() => {
     scrollToBottom();
-    dispatch(actions.getReplies(params.match.params.id));
-  }, [dispatch, params.match.params.id]);
+    dispatch(actions.getReplies(match.params.id));
+  }, [dispatch, match.params.id]);
 
   useEffect(() => {
-    if (endReply.current) {
-      scrollToBottom();
-    }
+    endReply.current && scrollToBottom();
   });
 
-  const scrollToBottom = () => {
+  const scrollToBottom = () =>
     endReply.current.scrollIntoView({ behavior: "smooth" });
-  };
 
   const endReply = useRef(null);
 
   return (
     <>
-      <>
-        {data.loadingReplies === true ? (
-          <Loading />
-        ) : (
-          <>
-            <h2>{data.title}</h2>
-            <br />
-            <h3>{data.question}</h3>
-            <hr />
-            <h3>Replies</h3>
-            <br />
-            <ul>
-              {data.replies.map((x) => (
-                <Reply
-                  comment={x.comment}
-                  username={x.user_name}
-                  time={x.created_at}
-                />
-              ))}
-            </ul>
-            <div ref={endReply}></div>
-            {authData === userTypes.administrator && (
-              <AddReply
-                data={data.replies}
-                dispatch={dispatch}
-                topicId={params.match.params.id}
+      {data.loadingReplies ? (
+        <Loading />
+      ) : (
+        <>
+          <h2>{data.title}</h2>
+          <br />
+          <h3>{data.question}</h3>
+          <hr />
+          <h3>Replies</h3>
+          <br />
+          <ul>
+            {data.replies.map((x) => (
+              <Reply
+                comment={x.comment}
+                username={x.user_name}
+                time={x.created_at}
               />
-            )}
-          </>
-        )}
-      </>
+            ))}
+          </ul>
+          <div ref={endReply}></div>
+          {authData === userTypes.administrator && (
+            <AddReply
+              data={data.replies}
+              dispatch={dispatch}
+              topicId={match.params.id}
+            />
+          )}
+        </>
+      )}
     </>
   );
 };

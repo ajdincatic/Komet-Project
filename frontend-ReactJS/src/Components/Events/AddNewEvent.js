@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ContentHeader } from "../ContentHeader";
 import axios from "axios";
 import { Input } from "../Input";
-import { endpoints } from "../../constants";
+import { endpoints, reactRoutes } from "../../constants";
 
 export const AddNewEvent = ({ history }) => {
   const [formIsValid, setFormIsValid] = useState(false);
@@ -94,7 +94,7 @@ export const AddNewEvent = ({ history }) => {
     axios
       .post(endpoints.events, formData)
       .then(() => {
-        history.replace("/events");
+        history.replace(reactRoutes.events);
       })
       .catch((error) => {
         alert("Something went wrong");

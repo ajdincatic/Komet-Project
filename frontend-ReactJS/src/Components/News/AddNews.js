@@ -4,7 +4,7 @@ import axios from "axios";
 import { endpoints } from "../../constants";
 import { Input } from "../Input";
 
-export const AddNews = (props) => {
+export const AddNews = ({ match, history }) => {
   const [formIsValid, setFormIsValid] = useState(false);
   const [form, setForm] = useState({
     title: {
@@ -87,13 +87,11 @@ export const AddNews = (props) => {
     for (let key in form) {
       formData[key] = form[key].value;
     }
-    formData.news_subfolder_id = props.match.params.id;
+    formData.news_subfolder_id = match.params.id;
     axios
       .post(endpoints.news, formData)
       .then((r) => {
-        props.history.replace(
-          "/news/subfolder/" + props.match.params.id + "/news"
-        );
+        history.replace("/news/subfolder/" + match.params.id + "/news");
       })
       .catch((error) => {
         alert("Something went wrong");

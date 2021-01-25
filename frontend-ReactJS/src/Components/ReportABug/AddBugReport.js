@@ -3,7 +3,7 @@ import { ContentHeader } from "../ContentHeader";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { AlertModal } from "../AlertModal";
-import { endpoints } from "../../constants";
+import { endpoints, reactRoutes } from "../../constants";
 import { Input } from "../Input";
 
 export const AddBugReport = ({ history }) => {
@@ -93,7 +93,7 @@ export const AddBugReport = ({ history }) => {
   }
 
   const [show, setShow] = useState(false);
-  const handleClose = () => history.replace("/");
+  const handleClose = () => history.replace(reactRoutes.dashboard);
   const handleShow = () => setShow(true);
 
   return (

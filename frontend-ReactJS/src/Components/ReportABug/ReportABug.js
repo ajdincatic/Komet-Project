@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { ContentHeader } from "../ContentHeader";
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../../store/actions/index";
-import styles from "../../Style/ReportABug.module.css";
+import { ItemsList } from "../ItemsList";
 
 export const ReportABug = () => {
   const data = useSelector((state) => state.bugReports.reports);
@@ -15,15 +15,13 @@ export const ReportABug = () => {
   return (
     <>
       <ContentHeader title="Reported bugs" />
-      {data.map((x) => (
-        <div className={styles.item} key={x.id}>
-          <span>{x.message}</span>
-          <span className={styles.contentRight}>
-            Reported by: {x.creator},{" "}
-            {x.created_at.slice(0, x.created_at.indexOf("T"))}
-          </span>
-        </div>
-      ))}
+      <ItemsList
+        data={data}
+        content="message"
+        labelRight="Reported by"
+        rightContent="creator"
+        created_at="created_at"
+      />
     </>
   );
 };

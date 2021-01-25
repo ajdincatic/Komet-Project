@@ -6,7 +6,7 @@ export const ContentHeader = ({ title, actionRoute, buttonText }) => (
   <div className={styles.mainDiv}>
     <h2 className={styles.h2}>{title}</h2>
     {actionRoute && (
-      <Link to={"/" + actionRoute} className={styles.link}>
+      <Link to={actionRoute} className={styles.link}>
         <button className={styles.button}>{buttonText ?? "Add new"}</button>
       </Link>
     )}

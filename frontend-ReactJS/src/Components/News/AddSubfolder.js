@@ -94,7 +94,7 @@ export const AddSubfolder = ({ dispatch, newsTypeId }) => {
 
   return (
     <>
-      <form style={{ marginTop: "20px" }} onSubmit={postDataHandler}>
+      <form onSubmit={postDataHandler}>
         {formElementsArray.map((el) => (
           <Input
             key={el.id}

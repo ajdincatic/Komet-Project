@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { endpoints } from "../../constants";
+import { endpoints, reactRoutes } from "../../constants";
 import { AddMedia } from "./AddMedia";
 
 export const AddVideo = ({ history }) => {
@@ -125,7 +125,7 @@ export const AddVideo = ({ history }) => {
     axios
       .post(endpoints.videos, formData)
       .then(() => {
-        history.replace("/allVideos");
+        history.replace(reactRoutes.allVideos);
       })
       .catch((error) => {
         alert("Something went wrong");

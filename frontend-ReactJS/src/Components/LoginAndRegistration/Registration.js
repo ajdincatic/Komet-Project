@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { Input } from "../Input";
 import { ErrorModal } from "../ErrorModal";
 import axios from "axios";
-import styles from "../../Style/Register.module.css";
-import { endpoints } from "../../constants";
+import styles from "../../Style/Auth.module.css";
+import { endpoints, reactRoutes } from "../../constants";
 import { Loading } from "../Loading";
 
 export const Registration = ({ history }) => {
@@ -289,7 +289,7 @@ export const Registration = ({ history }) => {
     axios
       .post(endpoints.users, formData)
       .then(() => {
-        history.replace("/login");
+        history.replace(reactRoutes.login);
       })
       .catch((err) => {
         setLoading(false);
@@ -314,7 +314,7 @@ export const Registration = ({ history }) => {
       {loading ? (
         <Loading />
       ) : (
-        <div className={styles.mainDiv}>
+        <div className={styles.registerMainDiv}>
           <div className={styles.form}>
             <form onSubmit={postDataHandler}>
               <h3 className={styles.h3}>Register to Komet</h3>
@@ -358,7 +358,7 @@ export const Registration = ({ history }) => {
               <br />
               <p className={styles.p}>
                 Already have account,
-                <Link to="/login" className={styles.link}>
+                <Link to={reactRoutes.login} className={styles.link}>
                   Log in.
                 </Link>
               </p>

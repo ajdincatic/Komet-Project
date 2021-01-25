@@ -4,6 +4,7 @@ import axios from "axios";
 import { ContentHeader } from "./ContentHeader";
 import styles from "../Style/Dashboard.module.css";
 import { Chart } from "./Chart";
+import { endpoints } from "../constants";
 
 export const Dashboard = () => {
   const [usersData, setUsersData] = useState({});
@@ -12,7 +13,7 @@ export const Dashboard = () => {
 
   useEffect(() => {
     axios
-      .get("/dashboard")
+      .get(endpoints.dashboard)
       .then((r) => {
         let temp = r.data.users_precentage_graph_data;
         setUsersData({

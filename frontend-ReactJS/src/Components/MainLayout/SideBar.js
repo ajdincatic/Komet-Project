@@ -2,18 +2,21 @@ import { useSelector } from "react-redux";
 import React from "react";
 import { SideBarItem } from "./SideBarItem";
 import { Link } from "react-router-dom";
-import { userTypes } from "../../constants";
+import { userTypes, reactRoutes } from "../../constants";
 import styles from "../../Style/Sidebar.module.css";
 
 export const SideBar = ({ isActive, user }) => {
   const authData = useSelector(
     (state) => state.auth.authUser.user.user_type_name
   );
-  const active = isActive ? styles.active : styles.nonActive;
   return (
-    <nav className={styles.sidebar + " " + active}>
+    <nav
+      className={`${styles.sidebar} ${
+        isActive ? styles.active : styles.nonActive
+      }`}
+    >
       <div className={styles.sidebarHeader}>
-        <Link to="/">
+        <Link to={reactRoutes.dashboard}>
           <h3 className={styles.h3}>KOMET</h3>
         </Link>
       </div>
@@ -21,33 +24,37 @@ export const SideBar = ({ isActive, user }) => {
 
       <ul className={styles.ul}>
         <li className={styles.li}>
-          <SideBarItem title="News" route="news" />
-          <SideBarItem title="Events" route="events" />
-          <SideBarItem title="Forum" route="forum" />
+          <SideBarItem title="News" route={reactRoutes.news} />
+          <SideBarItem title="Events" route={reactRoutes.events} />
+          <SideBarItem title="Forum" route={reactRoutes.forum} />
           {authData !== userTypes.administrator ? (
-            <SideBarItem title="Report a bug" route="reportABug/add" />
+            <SideBarItem
+              title="Report a bug"
+              route={reactRoutes.addBugReport}
+            />
           ) : (
-            <SideBarItem title="Report a bug" route="reportABug" />
+            <SideBarItem title="Report a bug" route={reactRoutes.reportABug} />
           )}
-          <SideBarItem title="Notifications" route="notifications" />
+          <SideBarItem
+            title="Notifications"
+            route={reactRoutes.notifications}
+          />
           {authData === userTypes.administrator ? (
             <SideBarItem
               title="Media"
-              route="media"
               subelements={[
-                { title: "Show all photos", route: "allPhotos" },
-                { title: "Add a photo", route: "addPhoto" },
-                { title: "Show all videos", route: "allVideos" },
-                { title: "Add a video", route: "addVideo" },
+                { title: "Show all photos", route: reactRoutes.allPhotos },
+                { title: "Add a photo", route: reactRoutes.addPhoto },
+                { title: "Show all videos", route: reactRoutes.allVideos },
+                { title: "Add a video", route: reactRoutes.addVideo },
               ]}
             />
           ) : (
             <SideBarItem
               title="Media"
-              route="media"
               subelements={[
-                { title: "Show all photos", route: "allPhotos" },
-                { title: "Show all videos", route: "allVideos" },
+                { title: "Show all photos", route: reactRoutes.allPhotos },
+                { title: "Show all videos", route: reactRoutes.allVideos },
               ]}
             />
           )}

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { ErrorModal } from "../ErrorModal";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { endpoints } from "../../constants";
-import styles from "../../Style/ForgotPassword.module.css";
+import { endpoints, reactRoutes } from "../../constants";
+import styles from "../../Style/Auth.module.css";
 
 export const ForgotPasswordCode = ({ history }) => {
   const [Codeform, CodesetForm] = useState("");
@@ -63,7 +63,7 @@ export const ForgotPasswordCode = ({ history }) => {
                 </button>
               )}
               <p className={styles.p}>
-                <Link to="/login" className={styles.link}>
+                <Link to={reactRoutes.login} className={styles.link}>
                   Go back to login.
                 </Link>
               </p>

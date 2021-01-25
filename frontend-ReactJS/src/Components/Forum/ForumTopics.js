@@ -2,17 +2,16 @@ import React, { useEffect } from "react";
 import { ContentHeader } from "../ContentHeader";
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../../store/actions/index";
-import { Link } from "react-router-dom";
 import { Loading } from "../Loading";
-import styles from "../../Style/News.module.css";
+import { ItemsList } from "../ItemsList";
 
-export const ForumTopics = (params) => {
+export const ForumTopics = ({ match }) => {
   const data = useSelector((state) => state.forum);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(actions.getTopics(params.match.params.id));
-  }, [dispatch, params.match.params.id]);
+    dispatch(actions.getTopics(match.params.id));
+  }, [dispatch, match.params.id]);
 
   return (
     <>
@@ -23,28 +22,19 @@ export const ForumTopics = (params) => {
           <ContentHeader
             title={data.topics.length === 0 ? "No topics" : "Topics"}
           />
-          <div>
-            {data.topics.map((x) => (
-              <Link
-                key={x.id}
-                className={styles.link}
-                to={"/forum/topics/" + x.id + "/replies"}
-                onClick={() => {
-                  dispatch(actions.clearReplies());
-                  dispatch(actions.setDataReply(x.title, x.question));
-                }}
-              >
-                <span>
-                  {x.title} | {x.question}?
-                </span>
-                <span className={styles.contentRight}>
-                  {x.number_of_replies}{" "}
-                  {x.number_of_replies === 1 ? "reply" : "replies"} -- Created
-                  by: {x.creator}
-                </span>
-              </Link>
-            ))}
-          </div>
+          <ItemsList
+            data={data.topics}
+            dispatch={dispatch}
+            action1={actions.clearReplies}
+            action2={actions.setDataReply}
+            linkPart1="/forum/topics/"
+            linkPart2="/replies"
+            content="question"
+            rightContent="number_of_replies"
+            labelRight="Replies"
+            author="creator"
+            created_at="created_at"
+          />
         </>
       )}
     </>

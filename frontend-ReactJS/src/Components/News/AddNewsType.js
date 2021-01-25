@@ -4,7 +4,7 @@ import { Input } from "../Input";
 import * as actions from "../../store/actions/index";
 import { endpoints } from "../../constants";
 
-export const AddNewsType = ({ data, dispatch }) => {
+export const AddNewsType = ({ dispatch }) => {
   const [formIsValid, setFormIsValid] = useState(false);
   const [form, setForm] = useState({
     type_name: {
@@ -87,7 +87,7 @@ export const AddNewsType = ({ data, dispatch }) => {
 
   return (
     <>
-      <form style={{ marginTop: "20px" }} onSubmit={postDataHandler}>
+      <form onSubmit={postDataHandler}>
         {formElementsArray.map((el) => (
           <Input
             key={el.id}

@@ -3,6 +3,7 @@ import { ContentHeader } from "../ContentHeader";
 import { useSelector } from "react-redux";
 import GoogleMaps from "../GoogleMap";
 import styles from "../../Style/Profile.module.css";
+import { reactRoutes } from "../../constants";
 
 export const Profile = () => {
   const auth = useSelector((state) => state.auth);
@@ -12,7 +13,7 @@ export const Profile = () => {
     <>
       <ContentHeader
         title="Profile"
-        actionRoute="profile/edit"
+        actionRoute={reactRoutes.editProfile}
         buttonText="Edit profile"
       />
       <div className={styles.mainContainer}>

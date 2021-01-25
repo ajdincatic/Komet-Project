@@ -7,7 +7,7 @@ import { Loading } from "../Loading";
 import { userTypes } from "../../constants";
 import styles from "../../Style/News.module.css";
 
-export const News = (params) => {
+export const News = ({ match }) => {
   const authData = useSelector(
     (state) => state.auth.authUser.user.user_type_name
   );
@@ -15,22 +15,22 @@ export const News = (params) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(actions.getNews(params.match.params.id));
+    dispatch(actions.getNews(match.params.id));
     setError(data.news.length === 0);
-  }, [dispatch, params.match.params.id, data.news.length]);
+  }, [dispatch, match.params.id, data.news.length]);
 
   const [error, setError] = useState(false);
 
   return (
     <>
-      {data.loadingNews === true ? (
+      {data.loadingNews ? (
         <Loading />
       ) : (
         <>
           {authData === userTypes.administrator ? (
             <ContentHeader
               title="News"
-              actionRoute={"subfolder/" + params.match.params.id + "/news/add"}
+              actionRoute={"/subfolder/" + match.params.id + "/news/add"}
             />
           ) : (
             <ContentHeader title="News" />

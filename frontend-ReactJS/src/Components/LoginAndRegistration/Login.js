@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../store/actions/index";
-import styles from "../../Style/Login.module.css";
+import styles from "../../Style/Auth.module.css";
 import GoogleLogin from "react-google-login";
 import { ErrorModal } from "../ErrorModal";
 import { Link } from "react-router-dom";
 import { Loading } from "../Loading";
 import avatar from "../../assets/teeth.png";
+import { endpoints, reactRoutes } from "../../constants";
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -29,20 +30,22 @@ export const Login = () => {
       );
       return;
     } else if (Passwordform === "") {
-      setvalidationErrorPassword(<p className="ValidationError">Required</p>);
+      setvalidationErrorPassword(
+        <p className={styles.ValidationError}>Required</p>
+      );
       return;
     }
     const formData = {
       email: Emailform,
       password: Passwordform,
     };
-    dispatch(actions.getData(formData, "/users/login"));
+    dispatch(actions.getData(formData, endpoints.login));
   };
 
-  const responseGoogle = (res) => {
+  const responseGoogleSuccess = (res) => {
     if (!res.profileObj.familyName)
       res.profileObj.familyName = res.profileObj.givenName;
-    dispatch(actions.getData(res.profileObj, "/users/google/login", "GOOGLE"));
+    dispatch(actions.getData(res.profileObj, endpoints.googleLogin, "GOOGLE"));
   };
 
   const responseGoogleFail = (res) => setgoogleError(true);
@@ -114,18 +117,18 @@ export const Login = () => {
                 <GoogleLogin
                   className={styles.googleButton}
                   clientId="527689655395-backu7t2bf8i3fhp2mvcpq4nlo9c298m.apps.googleusercontent.com"
-                  onSuccess={responseGoogle}
+                  onSuccess={responseGoogleSuccess}
                   onFailure={responseGoogleFail}
                   cookiePolicy={"single_host_origin"}
                 />
               </div>
 
               <div className={styles.footer}>
-                <Link to="/register">
+                <Link to={reactRoutes.register}>
                   <p className={styles.p}>Register now!</p>
                 </Link>
                 <hr />
-                <Link to="/forgotPassword">
+                <Link to={reactRoutes.forgotPassword}>
                   <p className={styles.p}>Forgot password?</p>
                 </Link>
               </div>

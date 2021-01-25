@@ -14,11 +14,36 @@ export const endpoints = {
   countries: "/countries",
   userTypes: "/users/types",
   yourNotifications: "/yourNotifications",
+  notofications: "/notifications",
   yourProfile: "/yourProfile",
+  login: "/users/login",
+  googleLogin: "/users/google/login",
+  dashboard: "/dashboard",
+};
+export const reactRoutes = {
+  dashboard: "/",
+  events: "/events",
+  addEvent: "/events/add",
+  register: "/register",
+  forgotPassword: "/forgotPassword",
+  forgotPasswordCode: "/forgotPassword/code",
+  login: "/login",
+  profile: "/profile",
+  editProfile: "/profile/edit",
+  updatePassword: "/profile/updatePassword",
+  news: "/news",
+  forum: "/forum",
+  reportABug: "/reportABug",
+  addBugReport: "/reportABug/add",
+  notifications: "/notifications",
+  addNotifications: "/notifications/add",
+  allPhotos: "/allPhotos",
+  addPhoto: "/addPhoto",
+  allVideos: "/allVideos",
+  addVideo: "/addVideo",
 };
 export const userTypes = {
   administrator: "Administrator",
   employee: "Employee",
 };
-
 export const googleApiKey = "AIzaSyCHG8i0CyrvmMNeT6MGVakW9r3jan6yoj0";

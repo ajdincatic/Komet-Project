@@ -90,28 +90,26 @@ export const AddReply = ({ dispatch, topicId }) => {
   }
 
   return (
-    <>
-      <form onSubmit={postDataHandler}>
-        {formElementsArray.map((el) => (
-          <Input
-            key={el.id}
-            elementType={el.config.elementType}
-            elementConfig={el.config.elementConfig}
-            value={el.config.value}
-            invalid={!el.config.valid}
-            shouldValidate={el.config.validation}
-            touched={el.config.touched}
-            changed={(event) => inputChangedHandler(event, el.id)}
-          />
-        ))}
-        {!formIsValid ? (
-          <button disabled type="submit">
-            Submit
-          </button>
-        ) : (
-          <button type="submit">Submit</button>
-        )}
-      </form>
-    </>
+    <form onSubmit={postDataHandler}>
+      {formElementsArray.map((el) => (
+        <Input
+          key={el.id}
+          elementType={el.config.elementType}
+          elementConfig={el.config.elementConfig}
+          value={el.config.value}
+          invalid={!el.config.valid}
+          shouldValidate={el.config.validation}
+          touched={el.config.touched}
+          changed={(event) => inputChangedHandler(event, el.id)}
+        />
+      ))}
+      {!formIsValid ? (
+        <button disabled type="submit">
+          Submit
+        </button>
+      ) : (
+        <button type="submit">Submit</button>
+      )}
+    </form>
   );
 };

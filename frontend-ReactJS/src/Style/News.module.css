@@ -1,20 +1,3 @@
-.link {
-  display: block;
-  width: 100%;
-  background-color: #ffffff;
-  border: 1px solid lightgray;
-  padding: 18px;
-}
-
-.link:hover {
-  cursor: pointer;
-  background-color: #eeeeee;
-}
-
-.link .contentRight {
-  float: right;
-}
-
 .news {
   margin-top: 50px;
   display: flex;

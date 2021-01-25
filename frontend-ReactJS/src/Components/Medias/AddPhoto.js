@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { endpoints } from "../../constants";
+import { endpoints, reactRoutes } from "../../constants";
 import { AddMedia } from "./AddMedia";
 
 export const AddPhoto = ({ history }) => {
@@ -113,7 +113,7 @@ export const AddPhoto = ({ history }) => {
     axios
       .post(endpoints.photos, formData)
       .then(() => {
-        history.replace("/allPhotos");
+        history.replace(reactRoutes.allPhotos);
       })
       .catch((error) => {
         alert("Something went wrong");

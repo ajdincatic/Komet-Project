@@ -6,11 +6,11 @@ export const Accordion = ({
   onElementClick,
   handleImageClick,
   active,
+  date,
+  description,
+  title,
   label1,
   label2,
-  value1,
-  value2,
-  value3,
   img,
 }) => (
   <>
@@ -18,15 +18,18 @@ export const Accordion = ({
       <div
         key={x.id}
         className={styles.header}
-        onClick={(e) => onElementClick(e, index)}
+        onClick={() => onElementClick(index)}
       >
-        <div className={styles.title}>{x[value1]}</div>
+        <div className={styles.title}>{x[title]}</div>
         <div className={`${styles.body} ${active === index && styles.active}`}>
           <p>
-            {label1} :{x[value2]}
+            {label1} :
+            {date === "created_at"
+              ? x[date].slice(0, x[date].indexOf("T"))
+              : x[date].slice(0, x[date].indexOf(" "))}
           </p>
           <p>{label2}</p>
-          <p>{x[value3]}</p>
+          <p>{x[description]}</p>
           {img != null && (
             <img
               className={styles.img}

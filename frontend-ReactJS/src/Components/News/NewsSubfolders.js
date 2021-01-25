@@ -3,13 +3,12 @@ import { ContentHeader } from "../ContentHeader";
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../../store/actions/index";
 import { ErrorModal } from "../ErrorModal";
-import { Link } from "react-router-dom";
 import { AddSubfolder } from "../News/AddSubfolder";
 import { Loading } from "../Loading";
 import { userTypes } from "../../constants";
-import styles from "../../Style/News.module.css";
+import { ItemsList } from "../ItemsList";
 
-export const NewsSubfolders = (params) => {
+export const NewsSubfolders = ({ match }) => {
   const authData = useSelector(
     (state) => state.auth.authUser.user.user_type_name
   );
@@ -17,15 +16,15 @@ export const NewsSubfolders = (params) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(actions.getNewsSubfolders(params.match.params.id));
+    dispatch(actions.getNewsSubfolders(match.params.id));
     setError(data.newsSubfolders.length === 0);
-  }, [dispatch, params.match.params.id, data.newsSubfolders.length]);
+  }, [dispatch, match.params.id, data.newsSubfolders.length]);
 
   const [error, setError] = useState(false);
 
   return (
     <>
-      {data.loadingSubfolders === true ? (
+      {data.loadingSubfolders ? (
         <Loading />
       ) : (
         <>
@@ -42,28 +41,23 @@ export const NewsSubfolders = (params) => {
               action={setError}
             />
           )}
-          {data.newsSubfolders.map((x) => {
-            return (
-              <Link
-                key={x.id}
-                className={styles.link}
-                to={"/news/subfolder/" + x.id + "/news"}
-                onClick={() => {
-                  dispatch(actions.clearNews());
-                }}
-              >
-                <span>{x.title}</span>
-                <span className={styles.contentRight}>
-                  Created by: {x.creator}
-                </span>
-              </Link>
-            );
-          })}
+          <ItemsList
+            data={data.newsSubfolders}
+            dispatch={dispatch}
+            action1={actions.clearNews}
+            linkPart1="/news/subfolder/"
+            linkPart2="/news"
+            content="title"
+            rightContent="creator"
+            labelRight="Created by"
+            created_at="created_at"
+          />
+          <br />
           {authData === userTypes.administrator && (
             <AddSubfolder
               data={data.newsSubfolders}
               dispatch={dispatch}
-              newsTypeId={params.match.params.id}
+              newsTypeId={match.params.id}
             />
           )}
         </>

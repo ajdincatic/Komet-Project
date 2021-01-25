@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { ContentHeader } from "../ContentHeader";
 import axios from "axios";
-import { endpoints } from "../../constants";
 import { Input } from "../Input";
+import { endpoints, reactRoutes } from "../../constants";
 
 export const AddNotification = ({ history }) => {
   const [data, setData] = useState([]);
@@ -133,9 +133,9 @@ export const AddNotification = ({ history }) => {
       formData.append("user_type_id", form["userTypes"].value);
 
     axios
-      .post("/notifications", formData)
+      .post(endpoints.notofications, formData)
       .then(() => {
-        history.replace("/notifications");
+        history.replace(reactRoutes.notifications);
       })
       .catch((error) => {
         alert("Something went wrong");

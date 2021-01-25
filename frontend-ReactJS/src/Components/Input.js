@@ -54,7 +54,11 @@ export const Input = ({
             -- Select {elementConfig.placeholder} --
           </option>
           {elementConfig.options.map((opt) => (
-            <option key={opt.value} value={opt.value}>
+            <option
+              key={opt.value}
+              value={opt.value}
+              selected={opt.value === value}
+            >
               {opt.displayValue}
             </option>
           ))}

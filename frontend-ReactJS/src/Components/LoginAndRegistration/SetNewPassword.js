@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Input } from "../Input";
 import axios from "axios";
-import { endpoints } from "../../constants";
+import { endpoints, reactRoutes } from "../../constants";
 import { Link } from "react-router-dom";
-import styles from "../../Style/ForgotPassword.module.css";
+import styles from "../../Style/Auth.module.css";
 
 export const SetNewPassword = (props) => {
   const [form, setForm] = useState({
@@ -93,7 +93,7 @@ export const SetNewPassword = (props) => {
     axios
       .post(endpoints.resetPassword, formData)
       .then(() => {
-        props.history.replace("/login");
+        props.history.replace(reactRoutes.login);
       })
       .catch((error) => {
         alert("Something went wrong");
@@ -109,38 +109,36 @@ export const SetNewPassword = (props) => {
   }
 
   return (
-    <>
-      <div className={styles.mainDiv}>
-        <div className={styles.form}>
-          <form onSubmit={postDataHandler}>
-            <h3 className={styles.h3}>Set new password</h3>
+    <div className={styles.mainDiv}>
+      <div className={styles.form}>
+        <form onSubmit={postDataHandler}>
+          <h3 className={styles.h3}>Set new password</h3>
 
-            {formElementsArray.map((el) => {
-              return (
-                <Input
-                  key={el.id}
-                  elementType={el.config.elementType}
-                  elementConfig={el.config.elementConfig}
-                  value={el.config.value}
-                  invalid={!el.config.valid}
-                  shouldValidate={el.config.validation}
-                  touched={el.config.touched}
-                  changed={(event) => inputChangedHandler(event, el.id)}
-                />
-              );
-            })}
+          {formElementsArray.map((el) => {
+            return (
+              <Input
+                key={el.id}
+                elementType={el.config.elementType}
+                elementConfig={el.config.elementConfig}
+                value={el.config.value}
+                invalid={!el.config.valid}
+                shouldValidate={el.config.validation}
+                touched={el.config.touched}
+                changed={(event) => inputChangedHandler(event, el.id)}
+              />
+            );
+          })}
 
-            <button type="submit" className={styles.button}>
-              Send
-            </button>
-            <p className={styles.p}>
-              <Link to="/login" className={styles.link}>
-                Go back to login.
-              </Link>
-            </p>
-          </form>
-        </div>
+          <button type="submit" className={styles.button}>
+            Send
+          </button>
+          <p className={styles.p}>
+            <Link to={reactRoutes.login} className={styles.link}>
+              Go back to login.
+            </Link>
+          </p>
+        </form>
       </div>
-    </>
+    </div>
   );
 };
