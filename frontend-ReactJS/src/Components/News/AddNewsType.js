@@ -72,7 +72,7 @@ export const AddNewsType = ({ dispatch }) => {
         baseState["value"] = "";
         setForm({ baseState });
       })
-      .catch((error) => {
+      .catch(() => {
         alert("Something went wrong");
       });
   };
@@ -100,13 +100,9 @@ export const AddNewsType = ({ dispatch }) => {
             changed={(event) => inputChangedHandler(event, el.id)}
           />
         ))}
-        {!formIsValid ? (
-          <button disabled type="submit">
-            Submit
-          </button>
-        ) : (
-          <button type="submit">Submit</button>
-        )}
+        <button disabled={!formIsValid} type="submit">
+          Submit
+        </button>
       </form>
     </>
   );

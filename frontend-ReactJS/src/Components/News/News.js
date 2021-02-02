@@ -8,18 +8,20 @@ import { userTypes } from "../../constants";
 import styles from "../../Style/News.module.css";
 
 export const News = ({ match }) => {
+  const [error, setError] = useState(false);
+
+  const data = useSelector((state) => state.news);
+
+  const dispatch = useDispatch();
+
   const authData = useSelector(
     (state) => state.auth.authUser.user.user_type_name
   );
-  const data = useSelector((state) => state.news);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(actions.getNews(match.params.id));
     setError(data.news.length === 0);
   }, [dispatch, match.params.id, data.news.length]);
-
-  const [error, setError] = useState(false);
 
   return (
     <>
@@ -27,14 +29,13 @@ export const News = ({ match }) => {
         <Loading />
       ) : (
         <>
-          {authData === userTypes.administrator ? (
-            <ContentHeader
-              title="News"
-              actionRoute={"/subfolder/" + match.params.id + "/news/add"}
-            />
-          ) : (
-            <ContentHeader title="News" />
-          )}
+          <ContentHeader
+            title="News"
+            actionRoute={
+              authData === userTypes.administrator &&
+              "/subfolder/" + match.params.id + "/news/add"
+            }
+          />
           {error && (
             <ErrorModal message="Subfolder is empty." action={setError} />
           )}

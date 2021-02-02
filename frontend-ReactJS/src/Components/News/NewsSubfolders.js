@@ -9,18 +9,18 @@ import { userTypes } from "../../constants";
 import { ItemsList } from "../ItemsList";
 
 export const NewsSubfolders = ({ match }) => {
+  const [error, setError] = useState(false);
+  const data = useSelector((state) => state.news);
+  const dispatch = useDispatch();
+
   const authData = useSelector(
     (state) => state.auth.authUser.user.user_type_name
   );
-  const data = useSelector((state) => state.news);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(actions.getNewsSubfolders(match.params.id));
     setError(data.newsSubfolders.length === 0);
   }, [dispatch, match.params.id, data.newsSubfolders.length]);
-
-  const [error, setError] = useState(false);
 
   return (
     <>

@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "../../Style/Sidebar.module.css";
+import { MdArrowDropDown } from "react-icons/md";
+import { activeStyle } from "../../constants";
 
-export const SideBarItem = ({ subelements, route, title }) => {
-  const activeStyle = {
-    background: "#6d7fcc",
-    fontWeight: "600",
-  };
+export const SideBarItem = ({ subelements, route, title, clickEvent }) => {
   const [submenuShow, setSubmenuShow] = useState(false);
   const handleSubmenu = () => setSubmenuShow(!submenuShow);
 
@@ -16,7 +14,7 @@ export const SideBarItem = ({ subelements, route, title }) => {
         <div onClick={handleSubmenu} className={styles.a}>
           {title}
           <span className={styles.submenuIcon}>
-            <i className="fas fa-caret-down"></i>
+            <MdArrowDropDown />
           </span>
         </div>
         <ul
@@ -31,6 +29,7 @@ export const SideBarItem = ({ subelements, route, title }) => {
                   className={styles.a}
                   activeStyle={activeStyle}
                   to={element.route}
+                  onClick={element.clickEvent}
                 >
                   {element.title}
                 </NavLink>
@@ -43,7 +42,12 @@ export const SideBarItem = ({ subelements, route, title }) => {
   } else {
     return (
       <div>
-        <NavLink className={styles.a} activeStyle={activeStyle} to={route}>
+        <NavLink
+          className={styles.a}
+          activeStyle={activeStyle}
+          to={route}
+          onClick={clickEvent}
+        >
           {title}
         </NavLink>
       </div>

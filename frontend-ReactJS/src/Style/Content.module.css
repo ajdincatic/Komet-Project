@@ -8,24 +8,15 @@
   padding: 20px;
   min-height: 100vh;
   transition: all 0.3s;
-}
-
-.active {
-  margin-left: 0;
+  margin-left: 250px;
 }
 
 .nonActive {
-  margin-left: 250px;
+  margin-left: 0;
 }
 
 @media (max-width: 900px) {
   .content {
-    margin-left: 0;
-  }
-  .active {
-    margin-left: 250px;
-  }
-  .nonActive {
     margin-left: 0;
   }
 }

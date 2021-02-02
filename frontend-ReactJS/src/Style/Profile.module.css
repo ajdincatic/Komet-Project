@@ -6,17 +6,20 @@
 }
 
 .map {
-  display: flex;
-  margin-left: 20%;
-  margin-top: 3%;
+  position: relative;
+  padding-bottom: 26.25%;
+  padding-top: 30px;
+  height: 500px;
+  overflow: hidden;
+  background: transparent url(../assets/loading.gif) no-repeat center center;
 }
 
 .leftDiv,
 .rightDiv {
   display: flex;
   flex-direction: column;
-  background-color: #fff;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  background-color: var(--main-box-color);
+  box-shadow: var(--boxShadow-profile);
 }
 
 .leftDiv {
@@ -42,6 +45,7 @@
 .editImg {
   max-width: 300px;
   max-width: 300px;
+  border: 3px solid lightgray;
 }
 
 .rightDiv .el {
@@ -77,18 +81,32 @@ hr {
 }
 
 @media (max-width: 990px) {
-  .rightDiv {
-    margin-top: 2%;
-    margin-left: 0;
-    width: 100%;
+  .mainContainer {
+    padding: 0;
   }
-  .leftDiv {
+  .rightDiv {
+    margin-top: 4%;
+    margin-left: 0;
+  }
+  .leftDiv,
+  .rightDiv {
     width: 100%;
   }
 }
 
 @media (max-width: 768px) {
-  .mainContainer {
-    flex-direction: column;
+  .p {
+    font-size: 14px;
+  }
+  .h6 {
+    display: flex;
+    justify-content: left;
+    width: 50%;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .editImg {
+    display: block;
+    margin: 0 auto;
   }
 }

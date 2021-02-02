@@ -1,23 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Wrapper } from "./Components/MainLayout/Wrapper";
 import { Routes } from "./Components/Routes";
 import { LoginRoutes } from "./Components/LoginRoutes";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { SideBar } from "./Components/MainLayout/SideBar";
 import { Content } from "./Components/MainLayout/Content";
+import * as actions from "./store/actions/index";
+import { useMediaQuery } from "react-responsive";
 import "./App.css";
+import "./Colors.css";
 import axios from "axios";
 
-export const App = () => {
-  const data = useSelector((state) => state.auth);
+const DARK_CLASS = "dark";
 
-  const [sidebarActive, setsidebarActive] = useState(true);
-  const [contentActive, setcontentActive] = useState(false);
+export const App = () => {
+  const [sidebarToogle, setSidebarToogle] = useState(true);
+  const [showBackdrop, setShowBackdrop] = useState(false);
+  const data = useSelector((state) => state.auth);
+  const theme = useSelector((state) => state.theme);
+  const dispatch = useDispatch();
+
+  const systemPrefersDark = useMediaQuery(
+    {
+      query: "(prefers-color-scheme: dark)",
+    },
+    undefined,
+    (prefersDark) => {
+      setIsDark(prefersDark);
+    }
+  );
+
+  const [isDark, setIsDark] = useState(
+    theme.isDark === null ? systemPrefersDark : theme.isDark
+  );
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add(DARK_CLASS);
+    } else {
+      document.documentElement.classList.remove(DARK_CLASS);
+    }
+    dispatch(actions.changeTheme(isDark));
+  }, [isDark, dispatch]);
+
+  const handleChangeTheme = () => {
+    setIsDark((prevState) => !prevState);
+    dispatch(actions.changeTheme(isDark));
+  };
+
+  const handleBackdropClick = () => {
+    setShowBackdrop(false);
+    setSidebarToogle(true);
+  };
+
+  const handleSidebarItemClick = () => {
+    window.innerWidth <= 900 && handleBackdropClick();
+  };
 
   const toogleMenu = () => {
-    setsidebarActive(!sidebarActive);
-    setcontentActive(!contentActive);
+    window.innerWidth <= 900
+      ? setSidebarToogle(false)
+      : setSidebarToogle((prevState) => !prevState);
+    setShowBackdrop(true);
   };
 
   if (!data.isAuth) {
@@ -32,10 +77,18 @@ export const App = () => {
     <Wrapper>
       <Router>
         <SideBar
-          isActive={sidebarActive}
+          sidebarToogle={sidebarToogle}
+          showBackdrop={showBackdrop}
+          handleBackdropClick={handleBackdropClick}
+          handleSidebarItemClick={handleSidebarItemClick}
           user={`${data.authUser.user.first_name} ${data.authUser.user.last_name}`}
         />
-        <Content isActive={contentActive} handler={toogleMenu}>
+        <Content
+          sidebarToogle={sidebarToogle}
+          handleChangeTheme={handleChangeTheme}
+          isDark={isDark}
+          handler={toogleMenu}
+        >
           <Routes />
         </Content>
       </Router>

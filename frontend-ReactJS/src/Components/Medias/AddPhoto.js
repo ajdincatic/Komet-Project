@@ -2,21 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { endpoints, reactRoutes } from "../../constants";
 import { AddMedia } from "./AddMedia";
+import { ProgressBar } from "../ProgressBar";
+import { ErrorModal } from "../ErrorModal";
 
 export const AddPhoto = ({ history }) => {
   const [data, setData] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("/medias/categories/photos")
-      .then((r) => {
-        setData(r.data);
-      })
-      .catch((error) => {
-        alert("Something went wrong");
-      });
-  }, []);
-
+  const [progress, setProgress] = useState(0);
+  const [error, setError] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
   const [form, setForm] = useState({
     title: {
@@ -61,6 +53,17 @@ export const AddPhoto = ({ history }) => {
       touched: false,
     },
   });
+
+  useEffect(() => {
+    axios
+      .get("/medias/categories/photos")
+      .then((r) => {
+        setData(r.data);
+      })
+      .catch(() => {
+        alert("Something went wrong");
+      });
+  }, []);
 
   form.categories.elementConfig.options = data.map((x) => {
     return { value: x.id, displayValue: x.title };
@@ -111,22 +114,42 @@ export const AddPhoto = ({ history }) => {
     formData.append("title", form["title"].value);
 
     axios
-      .post(endpoints.photos, formData)
+      .post(endpoints.photos, formData, {
+        onUploadProgress: (progressEvent) => {
+          setProgress(
+            Math.round((progressEvent.loaded / progressEvent.total) * 100)
+          );
+        },
+      })
       .then(() => {
         history.replace(reactRoutes.allPhotos);
       })
-      .catch((error) => {
-        alert("Something went wrong");
+      .catch(() => {
+        setError(true);
       });
   };
 
+  const handleErrorState = () => {
+    setError(false);
+    setProgress(0);
+  };
+
   return (
-    <AddMedia
-      type="photo"
-      form={form}
-      formIsValid={formIsValid}
-      handler={postDataHandler}
-      inputChangedHandler={inputChangedHandler}
-    />
+    <>
+      {error && (
+        <ErrorModal
+          message="File is too big."
+          handleErrorState={handleErrorState}
+        />
+      )}
+      <AddMedia
+        type="photo"
+        form={form}
+        formIsValid={formIsValid}
+        handler={postDataHandler}
+        inputChangedHandler={inputChangedHandler}
+      />
+      {progress > 0 && <ProgressBar progress={progress} />}
+    </>
   );
 };

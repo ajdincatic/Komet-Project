@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ErrorModal } from "./ErrorModal";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import { ContentHeader } from "./ContentHeader";
 import styles from "../Style/Dashboard.module.css";
@@ -10,6 +11,8 @@ export const Dashboard = () => {
   const [usersData, setUsersData] = useState({});
   const [employeesData, setEmployeesData] = useState({});
   const [administratorsData, setAdministratorsData] = useState({});
+  const [error, setError] = useState(false);
+  const theme = useSelector((state) => state.theme);
 
   useEffect(() => {
     axios
@@ -22,11 +25,9 @@ export const Dashboard = () => {
             datasets: [
               {
                 label: "% of users",
-                data: [temp.precent_of_users],
-                backgroundColor: "#74B649",
-                borderColor: "#74B649",
-                hoverBackgroundColor: "#75FDB5",
-                hoverBorderColor: "#75FDB5",
+                data: [temp.precent_of_users.toFixed(1)],
+                backgroundColor: "orange",
+                hoverBackgroundColor: "rgb(196, 127, 1)",
               },
             ],
           },
@@ -37,11 +38,9 @@ export const Dashboard = () => {
             datasets: [
               {
                 label: "% of employees",
-                data: [temp.precent_of_employees],
-                backgroundColor: "#d3d11a",
-                borderColor: "#74B649",
-                hoverBackgroundColor: "#75FDB5",
-                hoverBorderColor: "#75FDB5",
+                data: [temp.precent_of_employees.toFixed(1)],
+                backgroundColor: "green",
+                hoverBackgroundColor: "rgb(1, 90, 1)",
               },
             ],
           },
@@ -52,22 +51,19 @@ export const Dashboard = () => {
             datasets: [
               {
                 label: "% of administrators",
-                data: [temp.precent_of_administrators],
-                backgroundColor: "#6dd3c5",
-                borderColor: "#74B649",
-                hoverBackgroundColor: "#75FDB5",
-                hoverBorderColor: "#75FDB5",
+                data: [temp.precent_of_administrators.toFixed(1)],
+                backgroundColor: "brown",
+                hoverBackgroundColor: "rgb(124, 31, 31)",
               },
             ],
           },
         });
       })
-      .catch((error) => {
+      .catch(() => {
         setError(true);
       });
   }, []);
 
-  const [error, setError] = useState(false);
   const handleErrorState = () => setError(false);
 
   return (
@@ -80,9 +76,9 @@ export const Dashboard = () => {
       )}
       <ContentHeader title="Dashboard" />
       <div className={styles.charts}>
-        <Chart dataset={usersData.datasets} />
-        <Chart dataset={employeesData.datasets} />
-        <Chart dataset={administratorsData.datasets} />
+        <Chart dataset={usersData.datasets} theme={theme} />
+        <Chart dataset={employeesData.datasets} theme={theme} />
+        <Chart dataset={administratorsData.datasets} theme={theme} />
       </div>
       <div className={styles.footer}>
         &copy; QSD BIH Internship project - 2020/2021

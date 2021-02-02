@@ -6,8 +6,12 @@ import axios from "axios";
 import styles from "../../Style/Auth.module.css";
 import { endpoints, reactRoutes } from "../../constants";
 import { Loading } from "../Loading";
+import { Button } from "../Button";
 
 export const Registration = ({ history }) => {
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const [location, setLocation] = useState({
     longitude: 0,
     latitude: 0,
@@ -193,7 +197,7 @@ export const Registration = ({ history }) => {
           return { value: x.id, displayValue: x.name };
         });
       })
-      .catch((error) => {
+      .catch(() => {
         alert("Something went wrong");
       });
     axios
@@ -203,7 +207,7 @@ export const Registration = ({ history }) => {
           return { value: x.id, displayValue: x.type_name };
         });
       })
-      .catch((error) => {
+      .catch(() => {
         alert("Something went wrong");
       });
   }, [form.countries.elementConfig, form.userTypes.elementConfig]);
@@ -291,14 +295,11 @@ export const Registration = ({ history }) => {
       .then(() => {
         history.replace(reactRoutes.login);
       })
-      .catch((err) => {
+      .catch(() => {
         setLoading(false);
         setError("Wrong input, please try again.");
       });
   };
-
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const formElementsArray = [];
   for (let key in form) {
@@ -331,9 +332,10 @@ export const Registration = ({ history }) => {
                   changed={(event) => inputChangedHandler(event, el.id)}
                 />
               ))}
-              <button className={styles.button} onClick={locationButtonHandler}>
-                Access current location
-              </button>
+              <Button
+                buttonText="Access current location"
+                onClickHandler={locationButtonHandler}
+              />
 
               {location.longitude === 0 ? (
                 <p className={styles.p}>
@@ -346,15 +348,8 @@ export const Registration = ({ history }) => {
                 </p>
               )}
 
-              {!formIsValid ? (
-                <button className={styles.button} type="submit" disabled>
-                  Register
-                </button>
-              ) : (
-                <button className={styles.button} type="submit">
-                  Register
-                </button>
-              )}
+              <Button buttonText="Register" isDisabled={!formIsValid} />
+
               <br />
               <p className={styles.p}>
                 Already have account,

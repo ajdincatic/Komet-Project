@@ -28,3 +28,4 @@ export const AUTH_DATA = "AUTH_DATA";
 export const AUTH_ERROR = "AUTH_ERROR";
 export const DISABLE_AUTH_ERROR = "DISABLE_AUTH_ERROR";
 export const LOGOUT = "LOGOUT";
+export const CHANGE_THEME = "CHANGE_THEME";

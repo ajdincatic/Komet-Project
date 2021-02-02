@@ -1,4 +1,4 @@
-.modal {
+.bg {
   position: fixed;
   z-index: 1000;
   padding-top: 100px;
@@ -7,16 +7,15 @@
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: var(--backdrop-color);
   animation: animation 0.6s ease;
   -webkit-animation: animation 0.6s ease;
 }
 
 .modalContent {
-  background-color: #fefefe;
+  background-color: var(--body-bg-color);
   margin: auto;
   padding: 20px;
-  border: 1px solid #888;
   width: 30%;
 }
 
@@ -40,7 +39,7 @@
 
 .close:hover,
 .close:focus {
-  color: #000;
+  color: var(--main-text-color);
   text-decoration: none;
   cursor: pointer;
 }
@@ -48,7 +47,7 @@
 .button {
   padding: 10px;
   border: none;
-  background-color: rgb(81, 115, 228);
+  background-color: var(--button-main-color);
   border-radius: 3%;
   width: auto;
   margin-right: 5px;
@@ -61,7 +60,7 @@
 .cancelButton {
   padding: 10px;
   border: none;
-  background-color: lightgray;
+  background-color: var(--cancel-button-color);
   border-radius: 3%;
   color: #000;
   width: auto;
@@ -69,6 +68,12 @@
   font-size: 16px;
   outline: none !important;
   cursor: pointer;
+}
+
+.button:hover,
+.cancelButton:hover {
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
 }
 
 @-webkit-keyframes animation {

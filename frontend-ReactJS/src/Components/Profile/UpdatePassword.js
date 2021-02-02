@@ -6,9 +6,8 @@ import { useSelector } from "react-redux";
 import { Input } from "../Input";
 
 export const UpdatePassword = ({ history }) => {
-  const data = useSelector((state) => state.auth.authUser.user);
-
   const [formIsValid, setFormIsValid] = useState(false);
+  const [error, setError] = useState(false);
   const [form, setForm] = useState({
     current_password: {
       elementType: "input",
@@ -54,6 +53,8 @@ export const UpdatePassword = ({ history }) => {
       touched: false,
     },
   });
+
+  const data = useSelector((state) => state.auth.authUser.user);
 
   form.password.validation.equals = form.password_confirmation;
   form.password_confirmation.validation.equals = form.password;
@@ -111,7 +112,7 @@ export const UpdatePassword = ({ history }) => {
       .then(() => {
         history.replace("/profile");
       })
-      .catch((error) => {
+      .catch(() => {
         setError(true);
       });
   };
@@ -124,7 +125,6 @@ export const UpdatePassword = ({ history }) => {
     });
   }
 
-  const [error, setError] = useState(false);
   const handleErrorState = () => setError(false);
 
   return (
@@ -149,15 +149,9 @@ export const UpdatePassword = ({ history }) => {
             changed={(event) => inputChangedHandler(event, el.id)}
           />
         ))}
-        {!formIsValid ? (
-          <button disabled variant="primary" type="submit">
-            Submit
-          </button>
-        ) : (
-          <button variant="primary" type="submit">
-            Submit
-          </button>
-        )}
+        <button disabled={!formIsValid} type="submit">
+          Submit
+        </button>
       </form>
     </>
   );

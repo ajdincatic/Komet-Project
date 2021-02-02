@@ -6,28 +6,31 @@ import { userTypes, reactRoutes } from "../../constants";
 import { Accordion } from "../Accordion";
 
 export const Events = () => {
+  const [active, setActive] = useState(0);
+
   const authData = useSelector(
     (state) => state.auth.authUser.user.user_type_name
   );
-  const data = useSelector((state) => state.events);
+
+  const data = useSelector((state) => state.events.events);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(eventsActions.getEvents());
   }, [dispatch]);
 
-  const [active, setActive] = useState(0);
   const onElementClick = (index) => setActive(index);
 
   return (
     <>
-      {authData === userTypes.administrator ? (
-        <ContentHeader title="Events" actionRoute={reactRoutes.addEvent} />
-      ) : (
-        <ContentHeader title="Events" />
-      )}
+      <ContentHeader
+        title="Events"
+        actionRoute={
+          authData === userTypes.administrator && reactRoutes.addEvent
+        }
+      />
       <Accordion
-        data={data.events}
+        data={data}
         onElementClick={onElementClick}
         active={active}
         title={"title"}

@@ -9,9 +9,15 @@ import reportABugReducer from "./store/reducers/reportABug";
 import notificationsReducer from "./store/reducers/notifications";
 import forumReducer from "./store/reducers/forum";
 import authReducer from "./store/reducers/auth";
+import themesReducer from "./store/reducers/themes";
 
-const persistConfig = {
+const authPersistConfig = {
   key: "root",
+  storage,
+};
+
+const themePersistConfig = {
+  key: "root1",
   storage,
 };
 
@@ -22,7 +28,8 @@ const rootReducer = combineReducers({
   bugReports: reportABugReducer,
   notifications: notificationsReducer,
   forum: forumReducer,
-  auth: persistReducer(persistConfig, authReducer),
+  auth: persistReducer(authPersistConfig, authReducer),
+  theme: persistReducer(themePersistConfig, themesReducer),
 });
 
 const logger = (store) => {

@@ -5,8 +5,6 @@ import * as actions from "../../store/actions/index";
 import { useSelector } from "react-redux";
 
 export const AddReply = ({ dispatch, topicId }) => {
-  const data = useSelector((state) => state.auth);
-
   const [formIsValid, setFormIsValid] = useState(false);
   const [form, setForm] = useState({
     comment: {
@@ -24,6 +22,8 @@ export const AddReply = ({ dispatch, topicId }) => {
       touched: false,
     },
   });
+
+  const data = useSelector((state) => state.auth);
 
   const checkValidity = (value, rules) => {
     let isValid = true;
@@ -76,7 +76,7 @@ export const AddReply = ({ dispatch, topicId }) => {
         baseState["value"] = "";
         setForm({ baseState });
       })
-      .catch((error) => {
+      .catch(() => {
         alert("Something went wrong");
       });
   };
@@ -103,13 +103,9 @@ export const AddReply = ({ dispatch, topicId }) => {
           changed={(event) => inputChangedHandler(event, el.id)}
         />
       ))}
-      {!formIsValid ? (
-        <button disabled type="submit">
-          Submit
-        </button>
-      ) : (
-        <button type="submit">Submit</button>
-      )}
+      <button disabled={!formIsValid} type="submit">
+        Submit
+      </button>
     </form>
   );
 };

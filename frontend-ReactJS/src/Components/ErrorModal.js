@@ -9,7 +9,7 @@ export const ErrorModal = ({ dispatch, action, handleErrorState, message }) => {
   };
 
   return (
-    <div className={styles.modal}>
+    <div className={styles.bg}>
       <div className={styles.modalContent}>
         <span className={styles.close} onClick={handleClose}>
           &times;

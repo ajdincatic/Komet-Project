@@ -4,28 +4,29 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { endpoints, reactRoutes } from "../../constants";
 import styles from "../../Style/Auth.module.css";
+import { Button } from "../Button";
 
 export const ForgotPasswordCode = ({ history }) => {
-  const [Codeform, CodesetForm] = useState("");
+  const [codeForm, setCodeForm] = useState("");
+  const [error, setError] = useState(false);
 
-  const inputCode = (event) => CodesetForm(event.target.value);
+  const inputCode = (event) => setCodeForm(event.target.value);
 
   const postDataHandler = (e) => {
     e.preventDefault();
     const formData = {
-      code: Codeform,
+      code: codeForm,
     };
     axios
       .post(endpoints.resetPasswordCode, formData)
       .then((r) => {
         history.replace("/forgotPassword/" + r.data.id + "/newPassword");
       })
-      .catch((error) => {
+      .catch(() => {
         setError(true);
       });
   };
 
-  const [error, setError] = useState(false);
   const handleErrorState = () => setError(false);
 
   return (
@@ -49,19 +50,12 @@ export const ForgotPasswordCode = ({ history }) => {
                 className={styles.input}
                 type="text"
                 placeholder="Enter Code"
-                value={Codeform}
+                value={codeForm}
                 onChange={(event) => inputCode(event)}
               ></input>
 
-              {Codeform === "" ? (
-                <button className={styles.button} type="submit" disabled>
-                  Send
-                </button>
-              ) : (
-                <button className={styles.button} type="submit">
-                  Send
-                </button>
-              )}
+              <Button buttonText="Send" isDisabled={codeForm === ""} />
+
               <p className={styles.p}>
                 <Link to={reactRoutes.login} className={styles.link}>
                   Go back to login.

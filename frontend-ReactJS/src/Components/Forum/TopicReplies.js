@@ -7,11 +7,14 @@ import { AddReply } from "./AddReply";
 import { userTypes } from "../../constants";
 
 export const TopicReplies = ({ match }) => {
+  const data = useSelector((state) => state.forum);
+  const endReply = useRef(null);
+
+  const dispatch = useDispatch();
+
   const authData = useSelector(
     (state) => state.auth.authUser.user.user_type_name
   );
-  const data = useSelector((state) => state.forum);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     scrollToBottom();
@@ -24,8 +27,6 @@ export const TopicReplies = ({ match }) => {
 
   const scrollToBottom = () =>
     endReply.current.scrollIntoView({ behavior: "smooth" });
-
-  const endReply = useRef(null);
 
   return (
     <>

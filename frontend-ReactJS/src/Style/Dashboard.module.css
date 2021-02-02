@@ -2,7 +2,7 @@
   position: fixed;
   right: 30px;
   bottom: 20px;
-  color: grey;
+  color: var(--p-default-color);
 }
 
 .charts {
@@ -10,4 +10,19 @@
   justify-content: space-evenly;
   flex-wrap: wrap;
   margin-bottom: 50px;
+}
+
+.charts canvas {
+  max-width: 95%;
+}
+
+@media screen and (max-width: 1300px) {
+  .footer {
+    position: static;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .charts canvas {
+    margin-top: 20px;
+  }
 }

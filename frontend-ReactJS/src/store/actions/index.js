@@ -11,6 +11,7 @@ export {
 } from "./news";
 export { getReports } from "./reportABug";
 export { getNotifications } from "./notifications";
+export { changeTheme } from "./themes";
 export { getData, disableErrorData, logout, getProfileData } from "./auth";
 export {
   getCategories,

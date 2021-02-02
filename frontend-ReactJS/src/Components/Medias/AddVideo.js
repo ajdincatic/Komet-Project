@@ -5,18 +5,6 @@ import { AddMedia } from "./AddMedia";
 
 export const AddVideo = ({ history }) => {
   const [data, setData] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("/medias/categories/videos")
-      .then((r) => {
-        setData(r.data);
-      })
-      .catch((error) => {
-        alert("Something went wrong");
-      });
-  }, []);
-
   const [formIsValid, setFormIsValid] = useState(false);
   const [form, setForm] = useState({
     title: {
@@ -69,6 +57,17 @@ export const AddVideo = ({ history }) => {
       touched: false,
     },
   });
+
+  useEffect(() => {
+    axios
+      .get("/medias/categories/videos")
+      .then((r) => {
+        setData(r.data);
+      })
+      .catch(() => {
+        alert("Something went wrong");
+      });
+  }, []);
 
   form.categories.elementConfig.options = data.map((x) => {
     return { value: x.id, displayValue: x.title };
@@ -127,7 +126,7 @@ export const AddVideo = ({ history }) => {
       .then(() => {
         history.replace(reactRoutes.allVideos);
       })
-      .catch((error) => {
+      .catch(() => {
         alert("Something went wrong");
       });
   };

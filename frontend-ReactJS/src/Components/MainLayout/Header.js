@@ -3,13 +3,15 @@ import * as actions from "../../store/actions/index";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AlertModal } from "../AlertModal";
+import { Switch } from "../Switch";
 import styles from "../../Style/Header.module.css";
 import { reactRoutes } from "../../constants";
+import { GiHamburgerMenu } from "react-icons/gi";
 
-export const Header = ({ handler }) => {
+export const Header = ({ handler, handleChangeTheme, isDark }) => {
+  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
-  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleLogout = () => dispatch(actions.logout());
@@ -25,11 +27,13 @@ export const Header = ({ handler }) => {
       )}
       <div className={styles.mainDiv}>
         <button className={styles.button} onClick={handler}>
-          <i className="fas fa-align-left"></i>
-          <span className={styles.sidebarCollapse}>Toggle Sidebar</span>
+          <GiHamburgerMenu />
+          <span className={styles.sidebarText}>Toggle Sidebar</span>
         </button>
 
         <div className={styles.headerLinks}>
+          <Switch handleChangeTheme={handleChangeTheme} isDark={isDark} />
+
           <div className={styles.link}>
             <Link to={reactRoutes.profile}>Profile</Link>
           </div>

@@ -10,8 +10,8 @@
 }
 
 .newsEl {
+  background-color: var(--main-box-color);
   margin-top: 10px;
-  background-color: #ffffff;
   padding: 50px;
   border-radius: 10px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
@@ -19,12 +19,12 @@
 }
 
 .button {
-  background-color: rgb(76, 76, 236);
+  background-color: var(--button-main-color);
   padding: 10px;
   border-radius: 10px;
   color: #eeeeee;
 }
 
 .button:hover {
-  color: lightgreen;
+  opacity: 0.5;
 }

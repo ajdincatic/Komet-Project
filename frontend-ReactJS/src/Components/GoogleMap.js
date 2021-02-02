@@ -1,32 +1,33 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
-import { googleApiKey } from "../constants";
+import { useSelector } from "react-redux";
+import { googleApiKey, darkModeMapStyles } from "../constants";
 
-const mapStyles = {
-  width: "50%",
-  height: "50%",
+const GoogleMap = ({ google, latitude, longitude }) => {
+  const isDarkMode = useSelector((state) => state.theme.isDark);
+  const [key, setKey] = useState(isDarkMode);
+
+  useEffect(() => {
+    setKey(isDarkMode);
+  }, [isDarkMode]);
+
+  return (
+    <div>
+      <Map
+        key={key}
+        google={google}
+        zoom={15}
+        styles={isDarkMode ? darkModeMapStyles : { default: [] }}
+        initialCenter={{
+          lat: latitude,
+          lng: longitude,
+        }}
+      >
+        <Marker />
+      </Map>
+    </div>
+  );
 };
-
-class GoogleMap extends Component {
-  render() {
-    const { google, latitude, longitude } = this.props;
-    return (
-      <div>
-        <Map
-          google={google}
-          zoom={14}
-          style={mapStyles}
-          initialCenter={{
-            lat: latitude,
-            lng: longitude,
-          }}
-        >
-          <Marker onClick={this.onMarkerClick} name={"This is test name"} />
-        </Map>
-      </div>
-    );
-  }
-}
 
 export default GoogleApiWrapper({
   apiKey: googleApiKey,

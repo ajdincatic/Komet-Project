@@ -6,19 +6,6 @@ import { endpoints, reactRoutes } from "../../constants";
 
 export const AddNotification = ({ history }) => {
   const [data, setData] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(endpoints.userTypes)
-      .then((r) => {
-        let result = r.data.filter((x) => x.type_name !== "Administrator");
-        setData(result);
-      })
-      .catch((error) => {
-        alert("Something went wrong");
-      });
-  }, []);
-
   const [formIsValid, setFormIsValid] = useState(false);
   const [form, setForm] = useState({
     topic: {
@@ -77,6 +64,18 @@ export const AddNotification = ({ history }) => {
       touched: false,
     },
   });
+
+  useEffect(() => {
+    axios
+      .get(endpoints.userTypes)
+      .then((r) => {
+        let result = r.data.filter((x) => x.type_name !== "Administrator");
+        setData(result);
+      })
+      .catch(() => {
+        alert("Something went wrong");
+      });
+  }, []);
 
   form.userTypes.elementConfig.options = data.map((x) => {
     return { value: x.id, displayValue: x.type_name };
@@ -137,7 +136,7 @@ export const AddNotification = ({ history }) => {
       .then(() => {
         history.replace(reactRoutes.notifications);
       })
-      .catch((error) => {
+      .catch(() => {
         alert("Something went wrong");
       });
   };
@@ -166,13 +165,9 @@ export const AddNotification = ({ history }) => {
             changed={(event) => inputChangedHandler(event, el.id)}
           />
         ))}
-        {!formIsValid ? (
-          <button disabled type="submit">
-            Submit
-          </button>
-        ) : (
-          <button type="submit">Submit</button>
-        )}
+        <button disabled={!formIsValid} type="submit">
+          Submit
+        </button>
       </form>
     </>
   );

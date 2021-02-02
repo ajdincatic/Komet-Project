@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../Style/Modal.module.css";
 
 export const AlertModal = ({ message, handleClose, handleLogout }) => (
-  <div className={styles.modal}>
+  <div className={styles.bg}>
     <div className={styles.modalContent}>
       <span className={styles.close} onClick={handleClose}>
         &times;

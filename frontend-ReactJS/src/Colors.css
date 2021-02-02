@@ -1,0 +1,39 @@
+:root {
+  --body-bg-color: #fffbfb;
+  --main-text-color: #000000;
+  --main-box-color: #ffffff;
+  --button-main-color: rgb(81, 115, 228);
+  --boxShadow-main-color: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  --boxShadow-profile: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --p-default-color: #999;
+  --gray-hover-color: #eeeeee;
+  --main-button-text-color: #ffffff;
+  --auth-button-color: #4caf50;
+  --medias-bg-color: #e5ecec;
+  --cancel-button-color: lightgray;
+  --sidebar-bg-color: #697cc9;
+  --sidebar-welcome-color: #6476c0;
+  --backdrop-color: rgba(0, 0, 0, 0.4);
+  --reply-boxShadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+:root.dark {
+  --body-bg-color: #1a1919;
+  --main-text-color: #ffffff;
+  --main-box-color: #252525;
+  --button-main-color: rgb(55, 75, 139);
+  --boxShadow-main-color: 1px 1px 3px rgb(255, 255, 255);
+  --boxShadow-profile: 0 1px 3px 0 rgb(255, 255, 255),
+    0 1px 2px 0 rgb(255, 255, 255);
+  --p-default-color: rgb(211, 211, 211);
+  --gray-hover-color: #555555;
+  --main-button-text-color: #ffffff;
+  --auth-button-color: #4caf50;
+  --medias-bg-color: #5c5f5f;
+  --cancel-button-color: lightgray;
+  --sidebar-bg-color: rgb(55, 75, 139);
+  --sidebar-welcome-color: rgb(54, 71, 129);
+  --backdrop-color: rgba(255, 255, 255, 0.3);
+  --reply-boxShadow: 1px 1px 3px rgb(255, 255, 255);
+}

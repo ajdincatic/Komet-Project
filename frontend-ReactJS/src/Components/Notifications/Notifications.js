@@ -7,6 +7,10 @@ import { Accordion } from "../Accordion";
 import { PreviewImage } from "../PreviewImage";
 
 export const Notifications = () => {
+  const [show, setShow] = useState(false);
+  const [imgPath, setImgPath] = useState();
+  const [active, setActive] = useState(0);
+
   const authData = useSelector(
     (state) => state.auth.authUser.user.user_type_name
   );
@@ -21,26 +25,21 @@ export const Notifications = () => {
     setImgPath(path);
     handleShow();
   };
-  const [show, setShow] = useState(false);
-  const [imgPath, setImgPath] = useState();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [active, setActive] = useState(0);
   const onElementClick = (index) => setActive(index);
 
   return (
     <>
       {show && <PreviewImage handleClose={handleClose} imgPath={imgPath} />}
-      {authData === userTypes.administrator ? (
-        <ContentHeader
-          title="Notifications for you"
-          buttonText="Send notification"
-          actionRoute={reactRoutes.addNotifications}
-        />
-      ) : (
-        <ContentHeader title="Notifications for you" />
-      )}
+      <ContentHeader
+        title="Notifications for you"
+        buttonText="Send notification"
+        actionRoute={
+          authData === userTypes.administrator && reactRoutes.addNotifications
+        }
+      />
       <Accordion
         data={data.notifications}
         onElementClick={onElementClick}

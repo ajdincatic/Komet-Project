@@ -4,8 +4,9 @@ import axios from "axios";
 import { endpoints, reactRoutes } from "../../constants";
 import { Link } from "react-router-dom";
 import styles from "../../Style/Auth.module.css";
+import { Button } from "../Button";
 
-export const SetNewPassword = (props) => {
+export const SetNewPassword = ({ match, history }) => {
   const [form, setForm] = useState({
     password: {
       elementType: "input",
@@ -89,13 +90,13 @@ export const SetNewPassword = (props) => {
     for (let key in form) {
       formData[key] = form[key].value;
     }
-    formData["user_id"] = props.match.params.id;
+    formData["user_id"] = match.params.id;
     axios
       .post(endpoints.resetPassword, formData)
       .then(() => {
-        props.history.replace(reactRoutes.login);
+        history.replace(reactRoutes.login);
       })
-      .catch((error) => {
+      .catch(() => {
         alert("Something went wrong");
       });
   };
@@ -114,24 +115,21 @@ export const SetNewPassword = (props) => {
         <form onSubmit={postDataHandler}>
           <h3 className={styles.h3}>Set new password</h3>
 
-          {formElementsArray.map((el) => {
-            return (
-              <Input
-                key={el.id}
-                elementType={el.config.elementType}
-                elementConfig={el.config.elementConfig}
-                value={el.config.value}
-                invalid={!el.config.valid}
-                shouldValidate={el.config.validation}
-                touched={el.config.touched}
-                changed={(event) => inputChangedHandler(event, el.id)}
-              />
-            );
-          })}
+          {formElementsArray.map((el) => (
+            <Input
+              key={el.id}
+              elementType={el.config.elementType}
+              elementConfig={el.config.elementConfig}
+              value={el.config.value}
+              invalid={!el.config.valid}
+              shouldValidate={el.config.validation}
+              touched={el.config.touched}
+              changed={(event) => inputChangedHandler(event, el.id)}
+            />
+          ))}
 
-          <button type="submit" className={styles.button}>
-            Send
-          </button>
+          <Button buttonText="Send" />
+
           <p className={styles.p}>
             <Link to={reactRoutes.login} className={styles.link}>
               Go back to login.

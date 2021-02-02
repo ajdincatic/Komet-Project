@@ -96,7 +96,7 @@ export const AddNewEvent = ({ history }) => {
       .then(() => {
         history.replace(reactRoutes.events);
       })
-      .catch((error) => {
+      .catch(() => {
         alert("Something went wrong");
       });
   };
@@ -125,13 +125,9 @@ export const AddNewEvent = ({ history }) => {
             changed={(event) => inputChangedHandler(event, el.id)}
           />
         ))}
-        {!formIsValid ? (
-          <button disabled type="submit">
-            Submit
-          </button>
-        ) : (
-          <button type="submit">Submit</button>
-        )}
+        <button disabled={!formIsValid} type="submit">
+          Submit
+        </button>
       </form>
     </>
   );

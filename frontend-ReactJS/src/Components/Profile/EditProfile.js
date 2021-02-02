@@ -2,29 +2,16 @@ import React, { useEffect, useState } from "react";
 import { ContentHeader } from "../ContentHeader";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { endpoints, reactRoutes } from "../../constants";
+import { endpoints, reactRoutes, apiURL } from "../../constants";
 import { Input } from "../Input";
 import styles from "../../Style/Profile.module.css";
 import * as actions from "../../store/actions/index";
 
 export const EditProfile = ({ history }) => {
-  const data = useSelector((state) => state.auth.authUser.user);
-  const [countriesData, setData] = useState([]);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    axios
-      .get(endpoints.countries)
-      .then((r) => {
-        setData(r.data);
-      })
-      .catch((error) => {
-        alert("Something went wrong");
-      });
-  }, []);
-
+  const [countriesData, setCountriesData] = useState([]);
   const [formIsValid, setFormIsValid] = useState(false);
+  const data = useSelector((state) => state.auth.authUser.user);
+  const [imagePath, setImagePath] = useState(apiURL + data.photo_path);
   const [form, setForm] = useState({
     first_name: {
       elementType: "input",
@@ -142,6 +129,19 @@ export const EditProfile = ({ history }) => {
     return { value: x.id, displayValue: x.name };
   });
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    axios
+      .get(endpoints.countries)
+      .then((r) => {
+        setCountriesData(r.data);
+      })
+      .catch(() => {
+        alert("Something went wrong");
+      });
+  }, []);
+
   const checkValidity = (value, rules) => {
     let isValid = true;
 
@@ -156,10 +156,6 @@ export const EditProfile = ({ history }) => {
     return isValid;
   };
 
-  const [imagePath, setImagePath] = useState(
-    "http://komet-intern.qsd.ba" + data.photo_path
-  );
-
   const inputChangedHandler = (event, inputIdentifier) => {
     const updatedform = { ...form };
     const updatedFormElement = { ...updatedform[inputIdentifier] };
@@ -167,7 +163,7 @@ export const EditProfile = ({ history }) => {
       updatedFormElement.fileValue = event.target.files[0];
       if (event.target.files.length > 0)
         setImagePath(URL.createObjectURL(event.target.files[0]));
-      else setImagePath("http://komet-intern.qsd.ba" + data.photo_path);
+      else setImagePath(apiURL + data.photo_path);
     }
 
     updatedFormElement.value = event.target.value;
@@ -207,7 +203,7 @@ export const EditProfile = ({ history }) => {
         dispatch(actions.getProfileData());
         history.replace(reactRoutes.profile);
       })
-      .catch((error) => {
+      .catch(() => {
         alert("Something went wrong");
       });
   };
@@ -244,13 +240,9 @@ export const EditProfile = ({ history }) => {
         <img src={imagePath} alt="Admin" className={styles.editImg}></img>
         <br></br>
         <br></br>
-        {!formIsValid ? (
-          <button disabled type="submit">
-            Submit
-          </button>
-        ) : (
-          <button type="submit">Submit</button>
-        )}
+        <button disabled={!formIsValid} type="submit">
+          Submit
+        </button>
       </form>
     </>
   );

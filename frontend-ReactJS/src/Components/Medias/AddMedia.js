@@ -33,13 +33,9 @@ export const AddMedia = ({
             changed={(event) => inputChangedHandler(event, el.id)}
           />
         ))}
-        {!formIsValid ? (
-          <button disabled type="submit">
-            Submit
-          </button>
-        ) : (
-          <button type="submit">Submit</button>
-        )}
+        <button disabled={!formIsValid} type="submit">
+          Submit
+        </button>
       </form>
     </>
   );

@@ -3,38 +3,44 @@ import { ErrorModal } from "../ErrorModal";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { endpoints, reactRoutes } from "../../constants";
+import { Button } from "../Button";
 import styles from "../../Style/Auth.module.css";
 
 export const ForgotPassword = ({ history }) => {
-  const [Emailform, EmailsetForm] = useState("");
+  const [emailForm, setEmailForm] = useState("");
+  const [validationErrorEmail, setValidationErrorEmail] = useState(null);
+  const [error, setError] = useState(false);
 
-  const inputEmail = (event) => EmailsetForm(event.target.value);
-
-  const [validationErrorEmail, setvalidationErrorEmail] = useState(null);
+  const inputEmail = (event) => {
+    const newValue = event.target.value;
+    setEmailForm(newValue);
+    const pattern = /(.+)@(.+){2,}\.(.+){2,}/;
+    if (newValue === "" && !pattern.test(newValue)) {
+      setValidationErrorEmail(
+        <p className={styles.ValidationError}>Required field, email format</p>
+      );
+    } else if (!pattern.test(newValue)) {
+      setValidationErrorEmail(
+        <p className={styles.ValidationError}>Email format</p>
+      );
+    } else setValidationErrorEmail("");
+  };
 
   const postDataHandler = (e) => {
     e.preventDefault();
-    let pattern = /(.+)@(.+){2,}\.(.+){2,}/;
-    if (Emailform === "" || !pattern.test(Emailform)) {
-      setvalidationErrorEmail(
-        <p className={styles.ValidationError}>Required, email format</p>
-      );
-      return;
-    }
     const formData = {
-      email: Emailform,
+      email: emailForm,
     };
     axios
       .post(endpoints.resetPasswordEmail, formData)
       .then((r) => {
         history.replace(reactRoutes.forgotPasswordCode);
       })
-      .catch((error) => {
+      .catch(() => {
         setError(true);
       });
   };
 
-  const [error, setError] = useState(false);
   const handleErrorState = () => setError(false);
 
   return (
@@ -60,20 +66,15 @@ export const ForgotPassword = ({ history }) => {
                 className={styles.input}
                 type="text"
                 placeholder="Enter Email"
-                value={Emailform}
+                value={emailForm}
                 onChange={(event) => inputEmail(event)}
               ></input>
               {validationErrorEmail}
 
-              {Emailform === "" ? (
-                <button className={styles.button} type="submit" disabled>
-                  Send
-                </button>
-              ) : (
-                <button className={styles.button} type="submit">
-                  Send
-                </button>
-              )}
+              <Button
+                buttonText="Send"
+                isDisabled={validationErrorEmail !== ""}
+              />
 
               <p className={styles.p}>
                 <Link to={reactRoutes.login} className={styles.link}>

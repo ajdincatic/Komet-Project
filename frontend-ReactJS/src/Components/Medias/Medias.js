@@ -1,11 +1,15 @@
 import React, { useRef, useState } from "react";
 import { ContentHeader } from "../ContentHeader";
 import { PreviewImage } from "../PreviewImage";
+import { apiURL } from "../../constants";
 import Youtube from "react-youtube";
 import styles from "../../Style/Medias.module.css";
 var getYoutubeId = require("get-youtube-id");
 
 export const Medias = ({ type, data }) => {
+  const [show, setShow] = useState(false);
+  const [path, setPath] = useState();
+
   const handleOnVideoPlay = (event) => {
     videos.current.forEach((element) => {
       event.target.h.id !== element.props.id &&
@@ -19,8 +23,6 @@ export const Medias = ({ type, data }) => {
     setPath(path);
     handleShow();
   };
-  const [show, setShow] = useState(false);
-  const [path, setPath] = useState();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -34,10 +36,8 @@ export const Medias = ({ type, data }) => {
             {type === "photo" ? (
               <img
                 className={styles.image}
-                src={"http://komet-intern.qsd.ba" + x.link}
-                onClick={() =>
-                  handleImageClick("http://komet-intern.qsd.ba" + x.link)
-                }
+                src={apiURL + x.link}
+                onClick={() => handleImageClick(apiURL + x.link)}
                 thumbnail
                 alt="alt"
               />

@@ -1,43 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../store/actions/index";
 import styles from "../../Style/Auth.module.css";
 import GoogleLogin from "react-google-login";
 import { ErrorModal } from "../ErrorModal";
+import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { Loading } from "../Loading";
+import { Button } from "../Button";
+import { Switch } from "../Switch";
 import avatar from "../../assets/teeth.png";
 import { endpoints, reactRoutes } from "../../constants";
 
+const DARK_CLASS = "dark";
+
 export const Login = () => {
+  const [emailForm, setEmailForm] = useState("");
+  const [passwordForm, setPasswordForm] = useState("");
+  const [googleError, setGoogleError] = useState(false);
+  const [validationErrorEmail, setValidationErrorEmail] = useState(null);
+  const [validationErrorPassword, setValidationErrorPassword] = useState(null);
+  const theme = useSelector((state) => state.theme);
+
   const dispatch = useDispatch();
-  const [Emailform, EmailsetForm] = useState("");
-  const [Passwordform, PasswordsetForm] = useState("");
   const data = useSelector((state) => state.auth);
 
-  const inputEmail = (event) => EmailsetForm(event.target.value);
-  const inputPassword = (event) => PasswordsetForm(event.target.value);
+  const inputEmail = (event) => {
+    const newValue = event.target.value;
+    setEmailForm(newValue);
+    const pattern = /(.+)@(.+){2,}\.(.+){2,}/;
+    if (newValue === "" && !pattern.test(newValue)) {
+      setValidationErrorEmail(
+        <p className={styles.ValidationError}>Required field, email format</p>
+      );
+    } else if (!pattern.test(newValue)) {
+      setValidationErrorEmail(
+        <p className={styles.ValidationError}>Email format</p>
+      );
+    } else setValidationErrorEmail("");
+  };
 
-  const [validationErrorEmail, setvalidationErrorEmail] = useState(null);
-  const [validationErrorPassword, setvalidationErrorPassword] = useState(null);
+  const inputPassword = (event) => {
+    const newValue = event.target.value;
+    setPasswordForm(newValue);
+    if (newValue === "") {
+      setValidationErrorPassword(
+        <p className={styles.ValidationError}>Required field</p>
+      );
+    } else setValidationErrorPassword("");
+  };
 
   const postDataHandler = (e) => {
     e.preventDefault();
-    let pattern = /(.+)@(.+){2,}\.(.+){2,}/;
-    if (Emailform === "" || !pattern.test(Emailform)) {
-      setvalidationErrorEmail(
-        <p className={styles.ValidationError}>Required, email format</p>
-      );
-      return;
-    } else if (Passwordform === "") {
-      setvalidationErrorPassword(
-        <p className={styles.ValidationError}>Required</p>
-      );
-      return;
-    }
     const formData = {
-      email: Emailform,
-      password: Passwordform,
+      email: emailForm,
+      password: passwordForm,
     };
     dispatch(actions.getData(formData, endpoints.login));
   };
@@ -48,10 +65,43 @@ export const Login = () => {
     dispatch(actions.getData(res.profileObj, endpoints.googleLogin, "GOOGLE"));
   };
 
-  const responseGoogleFail = (res) => setgoogleError(true);
+  const responseGoogleFail = (res) => {
+    // error handling disabled for closing popup by user and incognito window
+    if (
+      res.error !== "popup_closed_by_user" &&
+      res.error !== "idpiframe_initialization_failed"
+    )
+      setGoogleError(true);
+  };
 
-  const [googleError, setgoogleError] = useState(false);
-  const handleErrorState = () => setgoogleError(false);
+  const handleErrorState = () => setGoogleError(false);
+
+  const handleChangeTheme = () => {
+    setIsDark((prevState) => !prevState);
+    dispatch(actions.changeTheme(isDark));
+  };
+  const systemPrefersDark = useMediaQuery(
+    {
+      query: "(prefers-color-scheme: dark)",
+    },
+    undefined,
+    (prefersDark) => {
+      setIsDark(prefersDark);
+    }
+  );
+
+  const [isDark, setIsDark] = useState(
+    theme.isDark === null ? systemPrefersDark : theme.isDark
+  );
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add(DARK_CLASS);
+    } else {
+      document.documentElement.classList.remove(DARK_CLASS);
+    }
+    dispatch(actions.changeTheme(isDark));
+  }, [isDark, dispatch]);
 
   return (
     <>
@@ -87,7 +137,7 @@ export const Login = () => {
                   className={styles.input}
                   type="text"
                   placeholder="Enter Email"
-                  value={Emailform}
+                  value={emailForm}
                   onChange={(event) => inputEmail(event)}
                 ></input>
                 {validationErrorEmail}
@@ -99,21 +149,19 @@ export const Login = () => {
                   className={styles.input}
                   type="password"
                   placeholder="Enter Password"
-                  value={Passwordform}
+                  value={passwordForm}
                   onChange={(event) => inputPassword(event)}
                 ></input>
-
                 {validationErrorPassword}
 
-                {Emailform === "" || Passwordform === "" ? (
-                  <button className={styles.button} type="submit" disabled>
-                    Login
-                  </button>
-                ) : (
-                  <button className={styles.button} type="submit">
-                    Login
-                  </button>
-                )}
+                <Button
+                  buttonText="Login"
+                  isDisabled={
+                    validationErrorEmail !== "" ||
+                    validationErrorPassword !== ""
+                  }
+                />
+
                 <GoogleLogin
                   className={styles.googleButton}
                   clientId="527689655395-backu7t2bf8i3fhp2mvcpq4nlo9c298m.apps.googleusercontent.com"
@@ -131,6 +179,7 @@ export const Login = () => {
                 <Link to={reactRoutes.forgotPassword}>
                   <p className={styles.p}>Forgot password?</p>
                 </Link>
+                <Switch handleChangeTheme={handleChangeTheme} isDark={isDark} />
               </div>
             </form>
           </div>

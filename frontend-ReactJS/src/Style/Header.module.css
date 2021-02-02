@@ -1,6 +1,6 @@
 .mainDiv {
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+  box-shadow: var(--boxShadow-main-color);
+  background-color: var(--body-bg-color);
   border: 1px solid lightgrey;
   padding: 10px;
   position: sticky;
@@ -13,12 +13,17 @@
 .button {
   padding: 10px;
   border: none;
-  background-color: rgb(81, 115, 228);
+  background-color: var(--button-main-color);
   border-radius: 3%;
   width: 13%;
   font-size: 14px;
-  color: #ffffff;
+  color: var(--main-button-text-color);
   outline: none !important;
+}
+
+.button:hover {
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
 }
 
 .headerLinks {
@@ -32,14 +37,12 @@
   margin-right: 15px;
 }
 
-@media (max-width: 1000px) {
-  .sidebarCollapse {
-    width: auto;
-  }
+.sidebarText {
+  margin-left: 8px;
 }
 
-@media (max-width: 768px) {
-  .sidebarCollapse {
+@media (max-width: 900px) {
+  .sidebarText {
     display: none;
   }
 }
@@ -47,5 +50,8 @@
 @media (max-width: 600px) {
   .button {
     width: auto;
+  }
+  .headerLinks {
+    font-size: 14px;
   }
 }

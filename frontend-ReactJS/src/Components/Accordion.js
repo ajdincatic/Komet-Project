@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../Style/Accordion.module.css";
+import { apiURL } from "../constants";
 
 export const Accordion = ({
   data,
@@ -33,10 +34,8 @@ export const Accordion = ({
           {img != null && (
             <img
               className={styles.img}
-              onClick={() =>
-                handleImageClick("http://komet-intern.qsd.ba" + x[img])
-              }
-              src={"http://komet-intern.qsd.ba" + x[img]}
+              onClick={() => handleImageClick(apiURL + x[img])}
+              src={apiURL + x[img]}
               alt="alt"
             />
           )}

@@ -19,8 +19,8 @@
   width: 30%;
   margin: 0 auto;
   padding: 3% 0 5% 0;
-  background-color: white;
-  border: 3px solid #f1f1f1;
+  background-color: var(--body-bg-color);
+  border: 3px solid lightgrey;
   padding: 50px;
 }
 
@@ -63,17 +63,6 @@
   outline: none !important;
 }
 
-.button {
-  background-color: #4caf50 !important;
-  border-radius: 0 !important;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  width: 100%;
-  outline: none !important;
-}
-
 .googleButton {
   width: 100%;
   outline: none !important;
@@ -96,7 +85,7 @@
 }
 
 .footer .p:hover {
-  color: #4caf50;
+  color: var(--auth-button-color);
 }
 
 @media screen and (max-width: 1300px) {

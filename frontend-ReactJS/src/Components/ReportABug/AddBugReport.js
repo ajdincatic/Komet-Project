@@ -7,8 +7,7 @@ import { endpoints, reactRoutes } from "../../constants";
 import { Input } from "../Input";
 
 export const AddBugReport = ({ history }) => {
-  const data = useSelector((state) => state.auth);
-
+  const [show, setShow] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
   const [form, setForm] = useState({
     message: {
@@ -27,6 +26,8 @@ export const AddBugReport = ({ history }) => {
       touched: false,
     },
   });
+
+  const data = useSelector((state) => state.auth);
 
   const checkValidity = (value, rules) => {
     let isValid = true;
@@ -79,7 +80,7 @@ export const AddBugReport = ({ history }) => {
       .then(() => {
         handleShow();
       })
-      .catch((error) => {
+      .catch(() => {
         alert("Something went wrong");
       });
   };
@@ -92,7 +93,6 @@ export const AddBugReport = ({ history }) => {
     });
   }
 
-  const [show, setShow] = useState(false);
   const handleClose = () => history.replace(reactRoutes.dashboard);
   const handleShow = () => setShow(true);
 
@@ -118,13 +118,9 @@ export const AddBugReport = ({ history }) => {
             changed={(event) => inputChangedHandler(event, el.id)}
           />
         ))}
-        {!formIsValid ? (
-          <button disabled type="submit">
-            Submit
-          </button>
-        ) : (
-          <button type="submit">Submit</button>
-        )}
+        <button disabled={!formIsValid} type="submit">
+          Submit
+        </button>
       </form>
     </>
   );

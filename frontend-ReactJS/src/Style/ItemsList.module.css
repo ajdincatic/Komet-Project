@@ -1,16 +1,19 @@
 .link {
-  display: block;
-  width: 100%;
-  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background-color: var(--accordion-list-bg-color);
   border: 1px solid lightgray;
   padding: 18px;
 }
 
 .link:hover {
   cursor: pointer;
-  background-color: #eeeeee;
+  background-color: var(--gray-hover-color);
 }
 
-.link .contentRight {
-  float: right;
+@media (max-width: 900px) {
+  .link {
+    font-size: 14px;
+  }
 }

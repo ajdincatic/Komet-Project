@@ -6,8 +6,6 @@ import { endpoints } from "../../constants";
 import { useSelector } from "react-redux";
 
 export const AddSubfolder = ({ dispatch, newsTypeId }) => {
-  const data = useSelector((state) => state.auth);
-
   const [formIsValid, setFormIsValid] = useState(false);
   const [form, setForm] = useState({
     title: {
@@ -25,6 +23,8 @@ export const AddSubfolder = ({ dispatch, newsTypeId }) => {
       touched: false,
     },
   });
+
+  const data = useSelector((state) => state.auth);
 
   const checkValidity = (value, rules) => {
     let isValid = true;
@@ -79,7 +79,7 @@ export const AddSubfolder = ({ dispatch, newsTypeId }) => {
         setForm({ baseState });
         dispatch(actions.getNewsSubfolders(newsTypeId));
       })
-      .catch((error) => {
+      .catch(() => {
         alert("Something went wrong");
       });
   };
@@ -107,13 +107,9 @@ export const AddSubfolder = ({ dispatch, newsTypeId }) => {
             changed={(event) => inputChangedHandler(event, el.id)}
           />
         ))}
-        {!formIsValid ? (
-          <button disabled type="submit">
-            Submit
-          </button>
-        ) : (
-          <button type="submit">Submit</button>
-        )}
+        <button disabled={!formIsValid} type="submit">
+          Submit
+        </button>
       </form>
     </>
   );
