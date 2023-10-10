@@ -1,2 +1,9 @@
-# QSD-Internship-Project
-Internship Komet project created during internship in company QSD, backend created using PHP Laravel, frontend created using react JS.
+  # Komet Project
+
+Used technologies:
+<br />
+Backend: PHP - Laravel
+<br />
+Frontend: React
+<br />
+Database: MySQL
